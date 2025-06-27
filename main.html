@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+        <meta name="format-detection" content="telephone=no">
+		<title>Fortuitous Flash Cards</title>
+        
+        <link rel="manifest" href="/manifest.json">
+        <link rel="stylesheet" type="text/css" href="js/JQ/jquery.mobile.icons-1.4.5.min.css" />
+        <link rel="stylesheet" type="text/css" href="js/JQ/jquery.mobile.structure-1.4.5.min.css" />
+        <link rel="stylesheet" type="text/css" href="js/JQ/jquery.mobile.theme-1.4.5.min.css" />
+        <link rel="stylesheet" type="text/css" href="js/JQ/jquery.mobile-1.4.5.min.css" />
+        
+        <link rel="stylesheet" type="text/css" href="css/flashback-theme.css" />
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile.simultaneous-transitions-replace.css" />
+<!--         <link rel="stylesheet" type="text/css" href="css/chardinjs.css" /> -->
+
+        <link rel="stylesheet" href="css/jquery.mobile.iscrollview.css" media="screen" type="text/css" />
+        <link rel="stylesheet" href="css/flashback.css" type="text/css" />
+		
+        <script type="text/javascript" src="js/JQ/jquery-2.1.4.min.js"></script> 
+
+        <script type="text/javascript" src="js/jquery.mobile.simultaneous-transitions-replace.js"></script>
+
+        <script type="text/javascript">
+        $(document).bind('mobileinit',function(){
+            $.mobile.changePage.defaults.changeHash = false;
+            $.mobile.hashListeningEnabled = false;
+            $.mobile.pushStateEnabled = false;
+        });
+        </script>
+
+		<script type="text/javascript" src="js/JQ/jquery.mobile-1.4.5.min.js"></script>
+        
+        <script type="text/javascript" src="js/JQ/jquery.csv-0.62.js"></script>
+        
+        <!--<script type="text/javascript" src="js/bgLog/kinetic-v5.1.0.min.js"></script>-->
+        <!--<script type="text/javascript" src="js/bgLog/sprintf-0.7-beta1.js"></script>-->
+        <script type="text/javascript" src="js/bgLog/JBbglogThemes.js"></script>
+        
+        <script type="text/javascript" src="js/iscroll.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile.iscrollview.js"></script>
+        <script type="text/javascript" src="cordova.js" charset="utf-8"></script>
+
+        <script type="text/javascript" src="js/spin.min.js"></script>
+        <script type="text/javascript" src="js/jquery.spin.js"></script>
+        <script type='application/javascript' src='js/fastclick.min.js'></script>        
+<!--        <script type="text/javascript" src="js/chardinjs.min.js"></script> -->       
+        
+        <script type="text/javascript" src="js/Flashcard/flashcheck.js"></script>  
+<!--    <script type="text/javascript" src="js/Flashcard/flashcheck.021.min.js"></script>  -->        
+
+        <script type="text/javascript" src="js/Flashcard/Deck.js"></script>
+        <script type="text/javascript" src="js/Flashcard/DeckSet.js"></script>
+        <script type="text/javascript" src="js/Flashcard/CardInDeck.js"></script>
+        <script type="text/javascript" src="js/Flashcard/Card.js"></script>
+        <script type="text/javascript" src="js/Flashcard/CubeCard.js"></script>
+        <script type="text/javascript" src="js/Flashcard/PlayCard.js"></script>
+        <script type="text/javascript" src="js/Flashcard/ConceptCard.js"></script>
+        <script type="text/javascript" src="js/Flashcard/CubePosition.js"></script>
+        <script type="text/javascript" src="js/Flashcard/PlayPosition.js"></script>
+        <script type="text/javascript" src="js/Flashcard/Play.js"></script>
+        <script type="text/javascript" src="js/Flashcard/OutcomeDistribution.js"></script>
+        <script type="text/javascript" src="js/Flashcard/RuleCard.js"></script>
+<!--    <script type="text/javascript" src="js/Flashcard/fbdata.min.js"></script>  -->
+        
+        <script type="text/javascript" src="js/greensock/TweenLite.min.js"></script>
+        <!--<script type="text/javascript" src="js/greensock/KineticPlugin.min.js"></script>-->
+        <script type="text/javascript" src="js/greensock/CSSPlugin.min.js"></script>
+    	<script type="text/javascript" src="js/greensock/AttrPlugin.min.js"></script>
+   	</head>
+    <body>
+    
+
+<!-- External Toolbars -->
+<!-- <div id='favButton' class='ui-btn ui-icon-plus ui-btn-icon-notext ui-corner-all'> -->
+
+    <div data-role="header" data-position="fixed" data-theme="a">
+        <div align="left" style="padding-left:5px">
+            <a href="#" id="otherHeaderButton" data-role="button" style="margin-left:5px"class="ui-btn-left ui-disabled ui-btn ui-btn-inline ui-mini ui-btn-icon-notext ui-corner-all ui-icon-back"></a>
+<!--             <a href="#" id="homeHeaderButton" data-role="button" style="margin-left:40px" class="ui-disabled ui-btn-left ui-btn ui-btn-inline ui-mini ui-btn-icon-notext ui-corner-all ui-icon-home"></a>             -->
+        </div>
+        <h1><span id="fixedheader">Select Deck</span></h1>
+        <div align="right" style="padding-right:5px">
+            <a href="#navPanel" id="navHeaderButton" style="margin-right:5px" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-btn-icon-notext ui-corner-all ui-icon-bars"></a>
+<!--             <a href="#" id="infoHeaderButton" style="margin-right:40px" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-btn-icon-notext ui-corner-all ui-icon-info"></a> -->
+        </div>            
+    </div><!-- /header -->
+
+    <div data-role="footer" data-tap-toggle="false" data-position="fixed" data-theme="a" id="footers">
+<!--         <div id="deckNavbar" data-role="navbar" data-intro="<em>Then, tap Start.</em>" data-position="top"> -->
+        <div id="deckNavbar" data-role="navbar">            
+            <ul>
+                <li><a href="javascript:void(0)" data-transition="none" id="beginBtn" class="ui-btn navFootBtn" style='font-size:150%'>Start</a></li>
+            </ul>
+        </div><!-- /navbar -->
+        <div id="statsNavbar" data-role="navbar">
+            <ul>
+                <li><a href="javascript:void(0)" data-transition="none" id="browseStart" class="ui-btn navFootBtn" style='font-size:150%'>Browse</a></li>
+                <li><a href="javascript:void(0)" data-transition="none" id="trainStart" class="ui-btn navFootBtn" style='font-size:150%'>Train</a></li>
+            </ul>
+        </div><!-- /navbar -->        
+        <div id="statsCompareNavbar" data-role="navbar">
+            <ul>
+                <li><a href="#deckselect" data-transition="pop" data-direction="reverse" class="ui-btn navFootBtn" style='font-size:150%'>Home</a></li>
+                <li><a href="#flashcards" data-transition="pop" class="ui-btn navFootBtn" style='font-size:150%'>Resume</a></li>
+            </ul>
+        </div><!-- /navbar -->                
+<!--        <div hidden id="settingsNavbar" data-role="navbar" data-iconpos="bottom">
+            <ul>
+                <li><a href="javascript:void(0)" data-rel="back" id="cancelSettings" class="ui-btn ui-icon-delete ui-btn-icon-bottom">Cancel</a></li>
+                <li><a href="javascript:void(0)" id="submitSettings" class="ui-btn ui-icon-check ui-btn-icon-bottom">Apply</a></li>
+            </ul>
+        </div>--><!-- /navbar -->
+        <div id="cardNavbar" data-role="navbar" data-iconpos="bottom">
+            <ul>
+                <li><a href="javascript:void(0)" data-transition="none" id="hard" class="ui-btn navFootBtn" style='font-size:150%'>Hard</a></li>
+                <li><a href="javascript:void(0)" data-transition="none" id="unsure" class="ui-btn navFootBtn" style='font-size:150%'>So-So</a></li>
+                <li><a href="javascript:void(0)" data-transition="none" id="easy" class="ui-btn navFootBtn" style='font-size:150%'>Easy</a></li>
+            </ul>
+        </div>
+        <div id="browseNavbar" data-role="navbar">
+            <ul>
+                <li><a href="javascript:void(0)" data-transition="none" id="nextBtn" class="ui-btn navFootBtn" style='font-size:150%'>Next</a></li>
+            </ul>
+        </div><!-- /navbar -->        
+    </div><!-- /footer -->
+
+    <div data-role="panel" id="navPanel" data-position="right" data-display="overlay">
+        <ul data-role="listview">
+            <li data-icon="delete"><a href="#" data-rel="close">Close Menu</a></li>
+            <li data-role="list-divider"></li>            
+            <li><a href="#" id="infoHeaderButton">Help</a></li>
+            <li><a href="#settings" id="settingsHeaderButton" >Settings</a></li>
+            <li><a href="#" class="buyButton" id="storeHeaderButton">Store</a></li>
+            <li><a href="#About" id="aboutHeaderButton">About</a></li>
+<!--             <li data-role="list-divider"></li>
+            <li><a href="#deckselect">Select Deck</a></li> -->
+<!--             <li><a href="#stats">Stats</a></li> -->
+        </ul> 
+    </div><!-- /panel -->
+
+
+
+
+<!-- Dynamic Pages -->
+
+        <div data-role="page" id="deckselect" data-title="Select Deck" data-theme="a">
+
+            <div class="whitebar"></div>
+            <div class="redbar"></div>
+            <div class="whitebar"></div>
+
+            <div class="DSContent"></div>
+
+            <div class="ui-content willScroll">
+                <fieldset class="ui-grid-a">
+                    <div class="button-wrap">
+                        <p>                        
+                            <button id="clearDecks" class="ui-btn ui-btn-mini ui-corner-all ui-btn-inline">Clear Selected Decks (<span id='numDeckSpan'>0</span>)</button>
+    <!--                         <button style="float:right; padding-top: 5px;" id="globalinfo" class='ui-btn ui-btn-mini ui-btn-inline ui-icon-info ui-btn-icon-notext ui-corner-all'></button> -->
+                        </p>
+                    </div>
+                </fieldset>
+    <!--             <form id="selectDeckForm" data-intro="<em>Welcome! &nbsp First, select one or more decks.</em>" data-position="top">    -->
+                <form id="selectDeckForm">   
+
+
+                    <div data-role="popup" id="NoneSelectedPopup" data-overlay-theme="b" data-theme="a" data-dismissible="false" style="max-width:400px;">
+                        <div role="main" class="centeredtext">
+                            <h3>Welcome!<br>You must make a selection to begin.</h3>
+                            <p>Expand at least one deck set, and select at least one deck.  Then tap <em>Start</em>.<br><br>You can always get detailed information specific to the page you're on (including this one!) by tapping <button href="#" id="sampleInfo" style="top: -3px; padding:0; margin:0;" class="ui-btn ui-btn-inline ui-mini ui-btn-icon-notext ui-corner-all ui-icon-bars"></button> in the header, and selecting <strong>Help</strong>.</p>
+                            <div data-role="controlgroup">
+                                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-a" data-rel="back"  data-transition="flow">Ok</a>
+                            </div>	
+                        </div>
+                    </div>
+                    <div data-role="popup" id="AllBrowsedPopup">
+                        <p>You have browsed all the selected cards!</p>  
+                    </div>
+                </form>
+    <!--             <br> -->
+    <!--             <fieldset class="ui-grid-a">
+                    <p style='text-align:center'>Number of selected decks: <span id='numDeckSpan'>0</span></p> 
+                    <div class="ui-block-a"><div class="button-wrap"><a href="#Help" data-transition="pop" id="refresh" class="ui-btn ui-corner-all">Refresh</a></div></div>
+                    <div class="ui-block-b"><div class="button-wrap"><a href="javascript:void(0)" data-transition="pop" id="clearDecks" class="ui-btn ui-corner-all">Clear</a></div></div>
+                </fieldset> -->
+
+    <!--             <div class="button-wrap">
+                    <p style='text-align:left'><button id="clearDecks" class="ui-btn ui-btn-mini ui-corner-all ui-btn-inline">Clear Selected Decks (<span id='numDeckSpan'>0</span>)</button></p>
+                </div> -->
+
+                <br><br>
+            </div><!-- /content -->
+        </div><!-- page -->
+
+
+        <div data-role="page" id="store" data-title="Store" data-theme="a">
+
+            <div class="whitebar"></div>
+            <div class="redbar"></div>
+            <div class="whitebar"></div>
+
+            <div class="AboutContent willScroll">
+                <p id="loading" style='text-align:center'><strong>Loading Store . . . </strong></p>
+                <table style='width:100%'>
+                    <tr>
+                        <td style='width:70%'><div class="ui-btn ui-corner-all buying" style='text-align:left' id="buying4">Opening Replies</div></td><td style='width:10%'><a id="infoButton4" style="margin-left: 10px;" class="ui-btn ui-btn-icon-notext ui-icon-info ui-corner-all infoButton metaButton"></a></td><td style='width:20%; text-align:right'><span id='price4'>Price</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><span id='desc4'>A complete system for understanding and memorizing all 630 money-game Opening Replies.  Learn the rules and the exceptions to the rules that guide opening play.  When you're ready, try the replies at other scores: DMP, Gammon Go, and Gammon Save.  Six decks.  Over 2500 cards.  If you haven't studied the replies, you don't know the replies.  Available now.</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><hr></td>
+                    </tr>
+                    <tr>
+                        <td style='width:70%'><div class="ui-btn ui-corner-all buying" style='text-align:left' id="buying5">Boot Camp: Extended</div></td><td style='width:10%'><a id="infoButton5" style="margin-left: 10px;" class="ui-btn ui-btn-icon-notext ui-icon-info ui-corner-all infoButton metaButton"></a></td><td style='width:20%; text-align:right'><span id='price5'>Price</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><span id='desc5'><em>Backgammon Boot Camp</em> provides essential reference positions from every phase of the game: Basic Training, Advanced Training, Races, End-Contact, Backgames, Primes, Attacking Play, and Match Play.  All 258 positions (diagrammed and implied) are included, along with another 50 positions chosen for effective contrast.  There is no better backgammon foundation than this set of problems.  Available now!</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><hr></td>
+                    </tr>                                
+                    <tr>
+                        <td style='width:70%'><div class="ui-btn ui-corner-all buying" style='text-align:left' id="buying8">Encyclopedia: Extended</div></td><td style='width:10%'><a id="infoButton8" style="margin-left: 10px;" class="ui-btn ui-btn-icon-notext ui-icon-info ui-corner-all infoButton metaButton"></a></td><td style='width:20%; text-align:right'><span id='price8'>Price</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><span id='desc8'><em>Backgammon Encyclopedia</em> provides essential Cube-Action reference positions from every phase of the game: Blitz, Holding Games, Anchor Games, Priming Games, Back Games, One Checker Up, Containment, Post-Ace-Point Games, and Races.  All 200 positions are included, along with another 22 positions chosen for effective contrast.  There is no better Cube-Action foundation than this set of problems.  Available now!<br><br><em>Revise.<em></span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><hr></td>
+                    </tr>                                
+                    <tr>
+                        <td style='width:70%'><div class="ui-btn ui-corner-all" style='text-align:left' id="restorePurchases">Restore Purchases</div></td><td style='width:10%'></td><td style='width:20%; text-align:right'>Free!</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">Restore prior purchases. (For use after a re-install, or after installation on a new device).</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><hr></td>
+                    </tr>                                
+                </table>
+
+                <br><p id="warning" style='text-align:justify'><strong>Note: </strong>Screen size, processing power, and OS version all impact the FlashBack experience.  Try before you buy!</p><br>
+
+                <div data-role="popup" id="purchasesRestored" data-overlay-theme="b" data-theme="a" style="max-width:400px;">
+                    <div role="main" class="centeredtext">
+                        <p><h3>Success!</h3><br>Your purchased decks have been restored.<br>&nbsp</p>
+                        <div data-role="controlgroup">
+                                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-a" data-rel="back"  data-transition="flow">Ok</a>
+                            </div>
+                    </div>
+
+                </div>
+                <div data-role="popup" id="noPurchases" data-overlay-theme="b" data-theme="a" style="max-width:400px;">
+                    <div role="main" class="centeredtext">
+                        <h3>Hmmm?</h3><p>Our records show you have not purchased any decks to restore.<br>&nbsp</p>
+                        <div data-role="controlgroup">
+                                <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-a" data-rel="back"  data-transition="flow">Ok</a>
+                            </div>
+                    </div>
+                </div>
+
+            </div><!-- /content -->
+        </div><!-- page -->
+
+
+
+    <div data-role="page" id="settings" data-title="Settings" data-theme="a">
+
+            <div class="whitebar"></div>
+            <div class="redbar"></div>
+            <div class="whitebar"></div>
+            <br>
+
+            <div class="ui-content willScroll">
+            	<!--<form id="settingsForm">-->
+    <!--                 <fieldset class="ui-grid-b">
+                        <div class="ui-block-a"><div class="button-wrap"><a href="#Help" data-transition="pop" id="tohelp" class="ui-btn ui-corner-all">Help</a></div></div>
+                        <div class="ui-block-b"><div class="button-wrap"><a href="#About" data-transition="pop" id="toabout" class="ui-btn ui-corner-all">About</a></div></div>
+                        <div class="ui-block-c"><div class="button-wrap"><a href="javascript:void(0)" data-transition="pop" id="toStore" class="ui-btn ui-corner-all buyButton">Store</a></div></div> 
+                        
+                    </fieldset> -->
+     <!--                <fieldset class="ui-grid-solo">
+                        <div class="ui-block-a"><div class="button-wrap"><a href="javascript:void(0)" data-transition="pop" id="tostats" class="ui-btn ui-corner-all">Training Stats</a></div></div>
+                    </fieldset> -->
+    <!--                 <br> -->
+
+                    <fieldset data-role="collapsible" data-corners="false">
+                        <legend>FlashBack Theme</legend>
+                        <fieldset data-role="controlgroup" data-corners="false">
+                            <label>
+                                <input type="radio" name="fbUITheme" id="fbThemeDay" value= "true">Day
+                            </label>
+                            <label>
+                                <input type="radio" name="fbUITheme" id="fbThemeNight" value= "false">Night
+                            </label>
+                        </fieldset>
+                    </fieldset>
+         
+                    <fieldset data-role="collapsible" data-corners="false">
+                        <legend>Board Theme</legend>
+                        <fieldset data-role="controlgroup" data-corners="false">
+                            <label>
+                                <input type="radio" name="fbTheme" value="theme1" id="fbTheme1"><img align="absmiddle" alt='image' style='width:30%; max-width:126px' src="inappimages/ThemeThumbs/Christmas.png">Christmas
+                            </label>
+                            <label>
+                                <input type="radio" name="fbTheme" value="theme2" id="fbTheme2"><img align="absmiddle" alt='image' style='width:30%; max-width:126px' src="inappimages/ThemeThumbs/Butter.png">Butterscotch
+                            </label>
+                            <label>
+                                <input type="radio" name="fbTheme" value="theme3" id="fbTheme3"><img align="absmiddle" alt='image' style='width:30%; max-width:126px' src="inappimages/ThemeThumbs/RedWhite.png">Business
+                            </label>
+                            <label>
+                                <input type="radio" name="fbTheme" value="theme4" id="fbTheme4"><img align="absmiddle" alt='image' style='width:30%; max-width:126px' src="inappimages/ThemeThumbs/Earth.png">Earth
+                            </label>
+                            <label>
+                                <input type="radio" name="fbTheme" value="theme5" id="fbTheme5"><img align="absmiddle" alt='image' style='width:30%; max-width:126px' src="inappimages/ThemeThumbs/Sand.png">Sand
+                            </label>
+                            <label>
+                                <input type="radio" name="fbTheme" value="theme6" id="fbTheme6"><img align="absmiddle" alt='image' style='width:30%; max-width:126px' src="inappimages/ThemeThumbs/Vineyard.png">Vineyard
+                            </label>
+                            <label>
+                                <input type="radio" name="fbTheme" value="theme7" id="fbTheme7"><img align="absmiddle" alt='image' style='width:30%; max-width:126px' src="inappimages/ThemeThumbs/Lorax.png">Lorax
+                            </label>
+                            <label>
+                                <input type="radio" name="fbTheme" value="theme8" id="fbTheme8"><img align="absmiddle" alt='image' style='width:30%; max-width:126px' src="inappimages/ThemeThumbs/Attache.png">Attache
+                            </label>
+                            <label>
+                                <input type="radio" name="fbTheme" value="theme9" id="fbTheme9"><img align="absmiddle" alt='image' style='width:30%; max-width:126px' src="inappimages/ThemeThumbs/Sunset.png">Sunset
+                            </label>
+                        </fieldset>
+                    </fieldset>
+
+                    <fieldset data-role="collapsible" data-corners="false" class="animationUI">
+                        <legend>Animation</legend>
+                        <fieldset data-role="controlgroup" data-corners="false">
+                            <div style='text-align:left'><strong>Higher = Faster</strong></div>
+                            <label for="fbAnimation">Speed (Why not shown?)</label>
+                            <div id="animation"><input type="range" name="fbAnimation" id="fbAnimation" data-highlight="true" min="0" max="100" value="50"></div>
+                        </fieldset>
+
+                    </fieldset>
+
+                    <fieldset data-role="collapsible" data-corners="false">
+                        <legend>Direction</legend>
+                        <fieldset data-role="controlgroup" data-corners="false">
+                            <label>
+                                <input type="radio" name="fbDirection" id="fbDirectionLeft" value= "true">Bearoff Left
+                            </label>
+                            <label>
+                                <input type="radio" name="fbDirection" id="fbDirectionRight" value= "false">Bearoff Right
+                            </label>
+                        </fieldset>
+                    </fieldset>
+
+                    <fieldset data-role="collapsible" data-corners="false">
+                        <legend>Options</legend>
+                        <fieldset data-role="controlgroup" data-corners="false">
+                            <label>
+                                <input type="checkbox" name="fbShowDice" id="fbShowDice">Show dice
+                            </label>
+                            <label>
+                                <input type="checkbox" name="fbShowPipcount" id="fbShowPipcount">Show pip count
+                            </label>
+                            <label>
+                                <input type="checkbox" name="fbShowPointNumbers" id="fbShowPointNumbers">Show point numbers
+                            </label>
+                            <label>
+                                <input type="checkbox" name="fbShowTakiPoints" id="fbShowTakiPoints">Show Taki (rounded) points
+                            </label>
+                            <label>
+                                <input type="checkbox" name="fbShowDeckName" id="fbShowDeckName">Show deck name above position
+                            </label>
+                        </fieldset>
+    <!--                     <fieldset data-role="controlgroup" data-corners="false" >
+                            <input type="checkbox" name="fbShowInitialHelp" id="fbShowInitialHelp" />
+                            <label for="fbShowInitialHelp">Restore initial help screens</label>
+                        </fieldset> -->
+    	            </fieldset>
+                    <!--<p style='text-align:center'>Adjust settings, then <strong>Apply</strong></p>-->
+    				<br><br>
+                <!--</form>-->
+            </div><!-- /content -->
+        </div><!-- page -->
+
+
+        <div data-role="page" id="stats" data-title="Stats" data-theme="a">
+
+            <div class="whitebar"></div>
+            <div class="redbar"></div>
+            <div class="whitebar"></div>
+
+            <div class="AboutContent willScroll">
+                <p class="centeredtext"><table id="stattext" style="border: 1px solid black; width: 100%; padding:5px"></table></p>
+                <a href="javascript:void(0)" class="ui-btn ui-corner-all" id="clearselectedtrain">Clear Training for Selected Decks</a>
+                <a href="javascript:void(0)" class="ui-btn ui-corner-all" id="cleartrain">Clear All Training</a>
+    <!--             <br><br>
+                <a href="javascript:void(0)" class="ui-btn ui-corner-all ui-disabled" id="resumeSession">Resume Session</a> -->
+
+            </div><!-- /content -->
+
+
+            <div data-role="popup" id="clearTrainingPopup" data-overlay-theme="b" data-theme="a" data-dismissible="false" style="max-width:400px;">
+                <div role="main" class="centeredtext">
+                    <h3>Are you sure you want to clear all training for all decks?</h3>
+                    <p>This action cannot be undone.</p>
+                    <div data-role="controlgroup">
+                        <a href="#" id="clearKeys" class="ui-btn ui-corner-all ui-shadow ui-btn-a" data-rel="back">Clear Training</a>
+                        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-a" data-rel="back"  data-transition="flow">Cancel</a>
+                    </div>
+                </div>
+            </div>
+            <div data-role="popup" id="clearSelectedTrainingPopup" data-overlay-theme="b" data-theme="a" data-dismissible="false" style="max-width:400px;">
+                <div role="main" class="centeredtext">
+                    <h3>Are you sure you want to clear all training within the selected decks?</h3>
+                    <p>This action cannot be undone.</p>
+                    <div data-role="controlgroup">
+                        <a href="#" id="clearSelectedKeys" class="ui-btn ui-corner-all ui-shadow ui-btn-a" data-rel="back">Clear Selected Training</a>
+                        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-a" data-rel="back"  data-transition="flow">Cancel</a>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- page -->
+
+
+
+        <div data-role="page" id="flashcards" data-title="Flashcard" data-theme="a">
+
+            <div class="whitebar"></div>
+            <div class="redbar"></div>
+            <div class="whitebar"></div>
+            
+            <div class="ui-content">
+
+                <div id="bglogContainer" class="iscroll-fixed"></div>
+                    
+    <!--             <button id="questioncontainer" class="ui-btn ui-btn-icon-left ui-icon-plus ui-noboxshadow" data-intro="<em>Tap the question to reveal the answer.</em>" data-position="top">I'm a header</button> -->
+                <button id="questioncontainer" class="ui-btn ui-btn-icon-left ui-icon-plus ui-noboxshadow">I'm a header</button>            
+
+                <div id="outerAnswerContainer" class="answerContainer" data-iscroll>
+                </div> <!-- outer -->
+
+
+
+
+
+
+                <div id="belowAnswerContainer">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td><button id="swapButton" data-transition="slide" data-mini="true" class="ui-btn ui-mini ui-btn-icon-left ui-icon-forward ui-btn-inline ui-corner-all">Swap</button></td>
+                            <td><button id="hintButton" data-transition="slide" data-mini="true" class="ui-btn ui-mini ui-icon-info ui-btn-icon-right ui-btn-inline ui-corner-all">Hint</button></td>
+                        </tr>
+                    </table>
+                </div> <!-- below -->
+    <!--             <div id="bottom" style="position:fixed; bottom:0; width: 100%; height: 60px" data-intro="<em>Then, rate the question to continue.</em>" data-position="top">&nbsp -->
+                <div id="bottom" style="position:fixed; bottom:0; width: 100%; height: 60px" >&nbsp                
+                </div>
+
+            </div> <!--content -->
+        </div><!-- flashcard -->
+
+
+
+    <!-- Static Pages -->
+
+        <div data-role="page" id="About" data-title="About" data-theme="a">
+            <div class="whitebar"></div>
+            <div class="redbar"></div>
+            <div class="whitebar"></div>
+            
+            <div class="willScroll AboutContent">            
+            
+                <h1 style="font-family:Tahoma; font-size: 40px;"><em>FlashBack</em></h1>
+                <h2 style="font-family:'Book Antiqua', Palatino, serif;">The Fortuitous Press</h2>
+                <h3>v 1.1.4 dev PGB Test</h3>
+                <br>
+                <table>
+                    <tr><td width='150'>Programming</td><td>Jeremy Bagai</td></tr>
+                    <tr><td></td><td>Simon Woodhead</td></tr>
+                    <tr><td> </td></tr>
+                    <tr><td>Graphics Engine</td><td><a href="#" onclick="window.open('http://bglog.org/main.html', '_system', 'location=no');">bgLog</a></td></tr>
+                    <tr><td> </td></tr>
+                    <tr><td>Framework</td><td><a href="#" onclick="window.open('http://jquerymobile.com/', '_system', 'location=no');">jQuery Mobile</a></td></tr>
+                    <tr><td></td><td><a href="#" onclick="window.open('http://phonegap.com/', '_system', 'location=no');">PhoneGap</a></td></tr>
+                    <tr><td> </td></tr>
+                    <tr><td>Rollout Data</td><td><a href="#" onclick="window.open('http://www.extremegammon.com/', '_system', 'location=no');">eXtreme Gammon</a></td></tr>
+                    <tr><td> </td></tr>
+                    <tr><td>Special Thanks</td><td>David Levy</td></tr>
+                    <tr><td></td><td>Joel Parker Henderson</td></tr>
+                    <tr><td>&nbsp;&nbsp;</tr>
+                    <tr><td colspan = '2' style='text-align:center'>Questions?  Comments?</td></tr>
+                    <tr><td colspan = '2' style='text-align:center'>Try our <a href="#" onclick="window.open('http://www.fortuitouspress.com/forum', '_system', 'location=no');">forums</a> or send an <a href="mailto:flashback@fortuitouspress.com" target="_top">email</a>.</td></tr>
+                </table>
+            </div><!-- /content -->
+        </div><!-- page -->
+
+
+        <div data-role="page" id="Help" data-title="Help" data-theme="a">
+            <div class="whitebar"></div>
+            <div class="redbar"></div>
+            <div class="whitebar"></div>
+            <br>
+
+            <div class="ui-content willScroll AboutContent">
+    <!--             <p class="centeredtext"><strong>Introduction and goals</strong></p> -->
+                <div data-role="collapsible-set" data-corners="false">
+    <!--                 <div style="text-align:center"><strong>Introduction and goals</strong><br><br></div> -->
+                    <fieldset data-role="collapsible">
+                        <legend>Why FlashBack?</legend>
+                        <p><strong>I've always hated memorization.</strong>  Shouldn't a good organizing principle be worth a thousand facts?  My twenty-plus years of backgammon study has always been focused on concepts, not data.<br><br>And . . . it shows.  For every essential reference position I've retained, a hundred more have simply evaporated.<br><br><strong>FlashBack was created to ease the pain of backgammon memorization.</strong>  And who knows?  You might just find a concept or two lurking within a heap of (well-structured) data.  Stranger things have happened.</p>
+                    </fieldset>
+                    <fieldset data-role="collapsible">
+                        <legend>What FlashBack Does</legend>
+                        <p><strong>FlashBack helps you absorb large sets of essential backgammon information</strong>, by presenting flashcards according to an optimized <a href="#" onclick="$( '#learningAlg' ).collapsible('expand')">Learning Algorithm</a>.  Each card shows a question.  Tap on the question to see the answer.  Choose Hard, So-So, or Easy to rate the card.  Cards marked as Hard will be shown more often than cards marked as Easy.  (Or just <a href="#" onclick="$( '#browseHelp' ).collapsible('expand')">Browse</a> cards in random order for a more casual learning experience.)<br><br>FlashBack <strong>doesn't</strong> teach the rules of backgammon.  (Want to learn how to play?  <a href='#' onclick="window.open('http://www.bkgm.com/rules.html', '_system', 'location=no')">Click here!</a>)<br><br>FlashBack <strong>doesn't</strong> play backgammon, nor does it analyze positions.  (Want a super-strong opponent with an interactive Tutor Mode?  <a href='#' onclick="window.open('http://www.extremegammon.com/', '_system', 'location=no')">Click here!</a>)</p>
+                    </fieldset>
+                    <fieldset data-role="collapsible">
+                        <legend>Navigating FlashBack</legend>
+                        <p><strong>The main sequence:</strong> 
+                            <ul>
+                                <li><a href="#" onclick="$( '#sdHelp' ).collapsible('expand')">Select Deck</a> page: Choose your deck or decks to study and tap <strong><em>Start</em></strong>, which takes you to . . . <br><br></li>
+                                <li><a href="#" onclick="$( '#stHelp' ).collapsible('expand')">Stats</a> page: Shows you the number of cards in the selected decks and their current training levels.  Tap <a href="#" onclick="$( '#browseHelp' ).collapsible('expand')">Browse or Train</a> to get to . . . <br><br></li>
+                                <li><a href="#" onclick="$( '#flashQ' ).collapsible('expand')">Flashcard</a> page: See successive cards. <br><br></li>
+                                <li>Tap <strong><em>Back</em></strong><button href="#" style="top: -3px; padding:0; margin:0;" class="ui-btn ui-btn-inline ui-mini ui-btn-icon-notext ui-corner-all ui-icon-back"></button> to return to the Stats page (which will now display your progress), and Back again to return to Select Deck page.</li>
+                            </ul>
+                            Other pages can be reached at any time from the <strong><em>Navigation Panel</em></strong>: <button href="#" style="top: -3px; padding:0; margin:0;" class="ui-btn ui-btn-inline ui-mini ui-btn-icon-notext ui-corner-all ui-icon-bars"></button>
+                            </p>
+
+                    </fieldset>                
+                    <fieldset data-role="collapsible" id="sdHelp">
+                        <legend>Select Deck</legend>
+                        <p>Each deck-set (Opening Roll, Bearoffs, etc.) expands to reveal multiple decks.<br><br><img src='inappimages/HintImages/DeckSet.png' alt='image' style='width:100%; max-width:400px; border:2px solid black; margin: 15px 0px'><br><br>Select one or more decks to study.  You may select individual decks from different deck-sets for a more varied study session.
+                            <ul>
+                                <li><button href="#" style="top: -3px; padding:0; margin:0;" class="ui-btn ui-btn-inline ui-mini ui-btn-icon-notext ui-corner-all ui-icon-info"></button>: More information about that deck set.</li>
+                                <li><button href="#" style="top: -3px; padding:0; margin:0;" class="ui-btn ui-btn-inline ui-mini ui-btn-icon-notext ui-corner-all ui-icon-check"></button>: Indicates at least one deck from set has been selected.</li>
+                                <li><button href="#" style="top: -3px; padding:0; margin:0;" class="ui-btn ui-btn-inline ui-mini ui-btn-icon-notext ui-corner-all ui-icon-lock"></button>: Deck set available for purchase.  (Free sample deck available.)  Tap button to navigate to Store page.</li>
+                            </ul>
+                            Begin your session by tapping <strong><em>Start</em></strong>.</p>
+                    </fieldset>
+                    <fieldset data-role="collapsible" id="Favs"   >
+                        <legend>Favorites</legend>
+                        <p>The last deck-set is <strong>Favorites</strong>.<br><img src='inappimages/HintImages/Favs.png' alt='image' style='width:100%; max-width:400px; border:2px solid black; margin: 15px 0px'><br>
+                        This deck will display only those cards that you have saved to Favorites while using the app.  (If no favorites have been saved, the deck is disabled.)  You can save any card to Favorites by tapping the <button href="#" id="sampleInfo" style="top: -3px; padding:0; margin:0;" class="ui-btn ui-btn-inline ui-mini ui-btn-icon-notext ui-corner-all ui-icon-star"></button> icon at the very bottom of the revealed answer.<br><br>
+                        Flashback's Training Mode produces something of the same effect -- those cards you rate as hard will continue to appear with greater frequency than those you rate as easy.  Nevertheless, the Favorites deck gives you more control over which cards to view, and ensures that the cards you find most interesting will always be available.</p>
+                    </fieldset>      
+                    <fieldset data-role="collapsible" id="stHelp"   >
+                        <legend>Stats</legend>
+                        <p>Shows which decks are currently selected, total number of cards selected, and the number of cards at each <a href="#" onclick="$( '#learningAlg' ).collapsible('expand')">Training Level</a>.  Upon return from a training session, the Stats page will also display the <em><strong>change</strong></em> in number of cards at each Training Level, giving a snapshot of your progress.<br><br><img src='inappimages/HintImages/StatChange.png' alt='image' style='width:100%; max-width:400px; border:2px solid black; margin: 15px 0px'><br><br>The two <strong><em>Clear Training</em></strong> buttons reset all Training Values to zero for the selected decks, or for all cards in all decks.  (Not to worry -- confirmation is required.)<br><br>Start viewing cards by selecting <em><strong>Browse</strong></em> or <em><strong>Train</strong></em> (described below):
+                    </fieldset>
+                    <fieldset data-role="collapsible" id="browseHelp">
+                        <legend>Browse or Train</legend>
+                        <p>
+                            <ul>
+                                <li><em><strong>Browse</strong></em> presents the selected cards in random order without replacement.  This is a good way to get an overview of the selected cards.  When each card has been seen once you will be brought back to the Select Deck screen.  <strong>Browsing cards has no effect on Training Values</strong>.  Think of browsing as casual review.<br><br></li>
+                                <li><em><strong>Train</strong></em> employs a version of <em>Spaced Repetition</em> to optimize your study time.  You will focus on a subset of about twenty cards at any one time.  Cards you mark as Hard are shown more often than cards you mark as Easy.  Mark a card as Easy enough times and it will be categorized as Learned, and a new card will be brought into the training set.  Over time, your responses help FlashBack create the perfectly tailored training schedule.  (See <a href="#" onclick="$( '#learningAlg' ).collapsible('expand')">Learning Algorithm</a> below for a detailed description.)</li>
+                            </ul>
+                            <strong>Note:</strong> In prior versions of FlashBack, Browsing cards <em>did</em> modify Training Values.  Unfortunately, this meant that browsing an entire deck would bring all the cards into active learning, and subsequent Training would lose the intended focus of a (rolling) twenty-card subset.<br><br>
+                            If you suspect this happened to you, examine the Stats page for a given deck.  Count the cards within groups 1-6.  If the sum is greater than, say, forty, you are likely not getting the full benefit of your Training sessions.  One solution is to use the button <strong>Clear Training for Selected Decks</strong> found on the Stats page.  Subsequent Training sessions will be focused and optimal.    
+
+                        </p>
+                    </fieldset>
+                    <fieldset data-role="collapsible" id="flashQ">
+                        <legend>Flashcard (Question)</legend>
+                        <p>The question text is presented on an expandable bar.  "Money game" implies the <a href='#' onclick="window.open('http://www.bkgm.com/gloss/lookup.cgi?jacoby+rule', '_system', 'location=no')">Jacoby Rule</a> is in effect.  If the position is from a match, the score will be presented.<br><br><img src='inappimages/HintImages/Question.png' alt='image' style='width:100%; max-width:400px; border:2px solid black; margin: 15px 0px'><br><br>Tap anywhere on the bar to reveal the answer.<br><br>
+                            <ul>
+                                <li><strong>Hint</strong>:  Conceptual overview for a class of positions.  If you're not sure where to start with a given card, tap Hint!  There's a wealth of material behind that button.  (Note that Hints have no effect on the learning algorithm.  FlashBack only cares about the rating you give to the card.)<br><br></li>
+                                <li><strong>Swap</strong>: Flips the position such that the top player is on roll.  Can be useful when deciding between Take, Pass, or Beaver.  (Cube only.)</li>
+                            </ul>
+                        </p>
+                    </fieldset>
+                    <fieldset data-role="collapsible" id="flashA"   >
+                        <legend>Flashcard (Answer)</legend>
+                        <p>Reveal the answer by tapping on the question bar.  The answer format depends on the kind of position:
+                        <div data-role="collapsible-set" data-corners="false"   >
+                            <fieldset data-role="collapsible"   >
+                                <legend>Checker Play</legend>
+                                    <p>For <strong>Checker Play</strong> positions, candidate moves are presented in order from best to worst.<br><br><img src='inappimages/HintImages/CheckerAns.png' alt='image' style='width:100%; max-width:400px; border:2px solid black; margin: 15px 0px'><br><br>Tap a move-string button to see how that play looks.  Tap again to revert to the original position.<br><br>The number in <strong>bold</strong> after the best play is the <em>equity</em> of that play.  The number in (parentheses) after each subsequent play is the equity <em>difference</em> from the best play, or the size of the error.  The size of an error is more important than the rank of a play.  Sometimes the seventh-best play is still very close to optimal; sometimes the second-best play is a colossal blunder.  For easy visual reference, equity differences are color coded:<ul><li>Differences under .01 are in Black / White (depending on FlashBack Theme).  Consider these answers to be just as good as the top play.</li><li><span style="color:green">Differences from .01 to .099 are in <strong>Green</strong></span>.  These range from minor to significant errors.</li><li><span style="color:red">Differences over .1 are in <strong>Red</strong></span>.  These are blunders.</li></ul><br>
+                                    </p>
+                            </fieldset>
+                            <fieldset data-role="collapsible"   >
+                                <legend>Cube Action</legend>
+                                <p>For <strong>Cube Action</strong> positions, the top line presents the correct Cube Action in <strong>bold</strong>.<img src='inappimages/HintImages/CubeAns.png' alt='image' style='width:100%; max-width:400px; border:2px solid black; margin: 15px 0px'><br><br>The subsequent lines present the equities of each possible Cube Action.  Again, numbers in (parentheses) reflect the sizes of possible errors.  The final line presents the percentage of Wins (Gammons, Backgammons) for each player.  <br><br>
+                                
+                                To proceed to the next card, tap <strong>Hard, So-So,</strong> or <strong>Easy</strong> in the footer.  Flashback will use your response to adjust how frequently that card is presented in subsequent training. (Note that you do not have to reveal the answer before moving on to the next card.  If the question is obvious to you, just tap on Easy to advance.)</p>
+                            </fieldset>
+                        </div><br>
+                        Just below the answer to each card, find the <strong>Position Name</strong> (if there is one) and the <strong>Favorites Button</strong>:<br><img src='inappimages/HintImages/PosName.png' alt='image' style='width:100%; max-width:400px; border:2px solid black; margin: 15px 0px'>
+                            <ul>
+                                <li><strong>BBC6-16</strong> indicates Position 6-15 from the book <em>Backgammon Boot Camp</em>.  As of now, only positions from <em>Boot Camp</em> show a Position Name.<br><br></li>
+                                <li><button href="#" id="sampleInfo" style="top: -3px; padding:0; margin:0;" class="ui-btn ui-btn-inline ui-mini ui-btn-icon-notext ui-corner-all ui-icon-star"></button>: Tap to add to Favorites.<br>Tap again (now on the <button href="#" id="sampleInfo" style="top: -3px; padding:0; margin:0;" class="ui-btn ui-btn-inline ui-mini ui-btn-icon-notext ui-corner-all ui-alt-icon ui-icon-star"></button> icon) to remove from Favorites.<br><br></li>
+                            </ul>
+                        </p>
+                    </fieldset>
+                            
+                    <fieldset data-role="collapsible" id="setHelp"   >
+                        <legend>Settings</legend>
+                        <p>
+                        <strong>FlashBack Theme</strong>: Day and Night themes for the general interface.<br><br>
+                        <strong>Board Theme</strong>: Change your board's color scheme.<br><br>
+                        <strong>Animation</strong>: Lower numbers are slower; Higher numbers are faster.  For no animation at all, set animation to 100 -- checkers will blink from one position to the next.<br><br>
+                        <strong>Direction</strong>: Don't get locked into playing only one way.  Boards come with two sides.<br><br>
+                        <strong>Options</strong>:
+                        <ul>
+                            <li><strong>Show Dice</strong> on the board as well as in the question.  (Can look cramped on smaller screens.)<br><br></li>
+                            <li><strong>Show Pip Count</strong>:  With pips on, the count is always shown.  With pips off, the count is hidden until the flashcard answer is open.<br><br></li>
+                            <li><strong>Show Point Numbers</strong>:  Learn to use point numbers for describing plays and counting pips.<br><br></li>
+                            <li><strong>Show Taki Points</strong>:  Taki style!<br><br></li>
+                            <li><strong>Show deck name above position</strong>: Sometimes the name of the deck provides too much of a hint.  For instance, if you are training on both an <strong>Opening Replies Positions</strong> deck and an <strong>Opening Replies Exceptions</strong> deck, you would prefer not to be cued as to which cards are which.<br><br>
+                            Simply uncheck this option and all cards from all decks will show the name <strong>FlashBack</strong>.
+                        </ul>
+                        </p>
+                    </fieldset>
+
+                    <fieldset data-role="collapsible" id="learningAlg"  >
+                        <legend>Learning Algorithm</legend>
+                        <p>Rather than present cards in purely random order, Flashback tracks your progress and presents each card at a frequency optimized for learning.  This is called <a href='#' onclick="window.open('http://en.wikipedia.org/wiki/Spaced_repetition', '_system', 'location=no')">Spaced Repetition</a>.  The two most popular methods are the <a href='#' onclick="window.open('http://en.wikipedia.org/wiki/Leitner_system', '_system', 'location=no')">Leitner</a> and <a href='#' onclick="window.open('http://en.wikipedia.org/wiki/SuperMemo', '_system', 'location=no')">SuperMemo</a> systems.  The Flashback algorithm takes features from each.  Here's how:
+                            <div data-role="collapsible-set" data-corners="false"   >
+                                <fieldset data-role="collapsible" id="trainingVal"   >
+                                    <legend>Training Values</legend>
+                                    <p>Each card starts with a Training Value of zero, for Unseen.  Values 1-6 indicate the card is In Training.  Value 7 indicates the card has been Learned.<br><br>
+                                    Generally, responding Hard <em>decreases</em> the Training Value of the card; So-So does nothing to the Training Value; and Easy <em>increases</em> the Training Value.<br><br>Once seen, a card cannot regain unseen status so its minimum Training Value is 1.  Once learned, a card cannot exceed the Training Value of 7 but a Hard or So-so response will decrease its Training Value.</p>
+                                </fieldset>
+                                <fieldset data-role="collapsible"   >
+                                    <legend>Card Selection</legend>
+                                    <p>FlashBack uses the Training Values of the selected cards to determine which card to present next.<ul><li>If the number of cards In Training is below 10 the next card will come from Unseen (provided there are any).  <em>This helps ensure you won't see repetition in your first 10 cards, and that there will always be a minimum of 10 cards in training.</em><br><br></li>
+                                    <li>If the number of cards In Training is between 10 and 20, the next card has a .5 chance of coming from Unseen and a .5 chance of coming from Training.  <em>This helps balance new and old cards.</em><br><br></li>
+                                    <li>If the number of cards In Training is above 20, the next card will not come from Unseen.  <em>This helps ensure the number of cards In Training is not overwhelming.</em><br><br></li>
+                                    <li>When a card is not selected from Unseen, it must come from either Training or Learned.  When both options are available, Training has a .95 chance while Learned has only .05.  <em>Once a card is Learned, it is only shown again sporadically.  It can drop back into Training if the given response is Hard or So-So.</em><br><br></li>
+                                    <li>Cards from Unseen or Learned are selected randomly.  Cards from Trained are <em>weighted</em> such that lower training values have greater chances to be picked.  (Cards with value 1 are assigned six tickets; cards with value 2 are assigned five; 3 are assigned four; 4 are assigned 3; 5 are assigned two; and 6 are assigned one.  One ticket is selected at random.)</li></ul></p>
+                                </fieldset>
+                            </div>
+                        <br>Ultimately, this process should be invisible to anyone not focused on it.  Choose Train, and over time Flashback will adapt to your needs.  Should you ever wish to see a wider range of cards than Train is showing, switch over to Browse and see them all.</p>
+                    </fieldset>                
+                    <fieldset data-role="collapsible"   >
+                        <legend>Compatibility</legend>
+                        <p>Flashback runs great on any iOS device running 8.0 or above.<br><br>
+                        <strong>In theory</strong> Flashback runs on any Android device.<br><br>
+                        <strong>In practice</strong> FlashBack runs great on most Android devices, depending on screen size and processor speed.<br><br>
+                        We <em>believe</em> we have rooted out all major graphical bugs.  If you see anything odd or distracting, try setting Animation to 100.  And be sure to mention the problem on the <a href="#" onclick="window.open('http://www.fortuitouspress.com/forum', '_system', 'location=no');">forums</a> or by <a href="mailto:flashback@fortuitouspress.com" target="_top">email</a>, thanks.</p>
+                    </fieldset>
+                    <fieldset data-role="collapsible"   >
+                        <legend>Feedback</legend>
+                        <p>We want to hear from you!
+                            <ul>
+                                <li>How can FlashBack improve?</li>
+                                <li>What new decks would you like to see?</li>
+                                <li>What new features would you like to use?</li>
+                                <li>Did you find a bug?</li>
+                            </ul>
+                        Join the conversation on our <a href="#" onclick="window.open('http://www.fortuitouspress.com/forum', '_system', 'location=no');">forums</a> or send an <a href="mailto:flashback@fortuitouspress.com" target="_top">email</a>, thanks.</p>
+                    </fieldset>
+                    <fieldset data-role="collapsible"   >
+                        <legend>Lessons</legend>
+                        <p>Jeremy Bagai gives individual and group backgammon lessons, in person and over Skype.  <a href="mailto:lessons@fortuitouspress.com" target="_top">Send an email to get started.</a><br><br>Or check out the good folks at the <a href="#" onclick="window.open('http://www.backgammonlearningcenter.com/index.html', '_system', 'location=no');">Backgammon Learning Center</a></p>
+                    </fieldset>
+                </div>  
+                <br><br>  
+            </div><!-- /content -->
+        </div><!-- page -->
+
+
+        <div data-role="page" id="hint0" data-title="Hint: Money" data-theme="a">
+            <div class="whitebar"></div>
+            <div class="redbar"></div>
+            <div class="whitebar"></div>
+            <br>
+
+            <div class="ui-content willScroll AboutContent">
+            	<div data-role="collapsible-set" data-corners="false"   >
+            	<fieldset data-role="collapsible"   >
+                    <legend>The Opening Roll</legend>
+                    <p>After some five-thousand years of backgammon, we're now pretty sure we know how to play the opening rolls.  When I started playing, twenty-five years ago,  . . . not so much.<br><br>
+                    In 1990 a 53 was often played 24/21 13/8, and a 32 was always played 13/10, 13/11.  But you don't have to make those mistakes . . .</p>
+                </fieldset>
+                <fieldset data-role="collapsible"   >
+                    <legend>The Naturals (31, 42, 53, 61, 65)</legend>
+                    <p><strong>31, 42, 53,</strong> and <strong>61</strong> all make good points. <strong>65</strong> runs a checker to safety.  These plays are clearly correct for money and at all match scores.  Don't give any thought to these plays -- just make them.<br><br>
+                    (64 also makes a point but not a good one, so it does not belong in this group but in the "The Other Sixes" below.)</p>
+                </fieldset>
+                <fieldset data-role="collapsible"   >
+                    <legend>The Other Sixes (62, 63, 64)</legend>
+                    <p>The proper play for <strong>62, 63</strong>, and <strong>64</strong> is for the back checker to play the 6 to the opponent's bar, and for the remaining number to come off the midpoint into your outer board.<br><br>
+                    Yes, the back checker is vulnerable to both 1s and 6s, but when hit it is not sent all that far back and there are often lots of return shots that send the opponent much further back.  When not hit, you have a good chance to make a great advanced anchor.<br><br>
+                    This play is clear for 62 and 63.  For 64, the alternatives of 24/14 and 8/2 6/2 are plausible.</p>
+                </fieldset>
+                <fieldset data-role="collapsible"   >
+                    <legend>The Other Aces (21, 41, 51)</legend>
+                    <p>Should you slot the best point on the board with 6/5, or take less risk with 24/23?  The plays have gone in and out of fashion like pleated pants.  But now we know.<br><br>
+                    <strong>Slot with 21.  Split with 41 and 51.</strong><br><br>
+                    The problem with slotting a 51 is that with only aces and threes to cover, there are twelve numbers that fail to make the five point next turn.  The problem with slotting a 41 is that your opponent has four more chances to hit something and your position is already strong without the risk.  The 21 slot has the best risk-to-reward ratio: No new shot numbers and seven more covers.<br><br>
+                    (Admittedly, the 21 decision is close enough to be regarded as a virtual tie.  Split if you feel like it.  The 41 and 51 decisions are not quite that close, but close enough that many strong players prefer to slot since the resulting games are more complex.)</p>
+                </fieldset>
+                <fieldset data-role="collapsible"   >
+                    <legend>Build or Split (32, 43, 52, 54)</legend>
+                    <p>Two down from the midpoint is called <strong>Building.</strong>  One from the midpoint and one of the back men is called <strong>Splitting.</strong>  Moving a back man all the way is called <strong>Running.</strong>  Moving both the back men is called <strong>Up.</strong><br><br>
+                    <strong>It turns out that splitting is correct in all cases.</strong>  (Except for 43, which is virtually tied.)<br><br>
+                    For 32 and 43, split with the three, and move the two / four from the midpoint.  For 52 and 54, the five must be played from the midpoint and the other number splits.</p>
+                </fieldset>
+                </div>
+                <br><br>
+            </div><!-- /content -->
+        </div><!-- page -->
+
+
+
+        <div data-role="page" id="hint1" data-title="Hint: DMP, GG, GS" data-theme="a">
+            <div class="whitebar"></div>
+            <div class="redbar"></div>
+            <div class="whitebar"></div>
+            <br>
+
+            <div class="ui-content willScroll AboutContent">
+            	<div data-role="collapsible-set" data-corners="false"   >
+            	<fieldset data-role="collapsible"   >
+                    <legend>The Four Scores</legend>
+                    <p>Match play is tricky.  Every score is different.<br><br>
+                    A good place to start is with the four canonical scores: Money, Double Match Point, Gammon Go, and Gammon Save.  You're already familiar with Money play (see the Opening Money deck).  This section will go over the properties of Double Match Point, Gammon Go, and Gammon Save.</p>
+                </fieldset>
+                <fieldset data-role="collapsible"   >
+                    <legend>Double Match Point (DMP)</legend>
+                    <p>Each player needs only one point to win the match. This will be the last game.  Gammons are irrelevant.  Opening rolls are nearly identical to Money plays, and the two differences are tiny.<br><br>
+                    With <strong>64</strong>, run all the way with 24/14 instead of splitting.  Perhaps this is because the 18pt anchor goes down in value when you have no fear of being gammoned, but splitting is still close enough to make no real difference.<br><br>
+                    With <strong>41</strong>, slot with 13/9 6/5 instead of splitting.  The difference here is even smaller.</p>
+                </fieldset>
+                <fieldset data-role="collapsible"   >
+                    <legend>Gammon Go (GG)</legend>
+                    <p>You trail -2, -1 Crawford, so there is no cube this game.  Losing a gammon doesn't hurt you any more than losing a plain game in that either will lose the match.  But <strong>winning</strong> a gammon helps you a great deal.<br><br>
+                    This means you have little interest in splitting (which can lead to a gammon-protective advanced anchor), and lots of interest in slotting and building (which give you better chances for winning a gammon).<br><br>
+                    The Naturals all play the same.<br>
+                    The Other Aces all <strong>slot</strong>.<br>
+                    The Build/Splits all <strong>build.</strong><br><br>
+                    The Other Sixes:<ul><li>62 slots the five point!  (Many strong players forget this over the board.)</li><li>63 still splits.</li><li>64 makes the two point.</li></ul></p>
+                </fieldset>
+                <fieldset data-role="collapsible"   >
+                    <legend>Gammon Save (GS)</legend>
+                    <p>You lead -1, -2 Crawford, so there is no cube this game.  Winning a gammon doesn't help you any more than winning a plain game in that either will win the match.  But <strong>losing</strong> a gammon hurts you a great deal.<br><br>
+                    This means you have great interest in splitting (to make a bid for an advanced anchor), and little interest in slotting and building.<br><br>
+                    The Naturals all play the same.<br><br>
+                    The Other Aces all <strong>split</strong> . . . except that 21 still wants to slot by a tiny margin.  So in fact, Other Aces also play the same as money.<br><br>
+                    The Build/Splits all <strong>split.</strong><br><br>
+                    The Other Sixes <strong>split</strong> (just like money), except for 64 where running is slightly better.</p>
+                </fieldset>
+                </div>
+                <br><br>    
+            </div><!-- /content -->
+        </div><!-- page -->
+
+    <div data-role="page" id="hint2" data-title="Hint: Other Scores" data-theme="a">
+            <div class="whitebar"></div>
+            <div class="redbar"></div>
+            <div class="whitebar"></div>
+            <br>
+
+            <div class="ui-content willScroll AboutContent">
+            	<div data-role="collapsible-set" data-corners="false"   >
+            	<fieldset data-role="collapsible"   >
+                    <legend>The Opening Roll At Other Scores</legend>
+                    <p>The general idea is to determine whether a particular score plays more like <strong>$$, DMP, GG,</strong> or <strong>GS</strong>.  And the <em>general</em> idea there is that a big lead translates to Gammon Save while a big deficit translates to Gammon Go.<br><br>
+                    But there are many subtleties . . . </p>
+                </fieldset>
+                <fieldset data-role="collapsible"   >
+                    <legend>Crawford Scores</legend>
+                    <p>We're familiar with <strong>-2,-1 Crawford</strong> (Gammon Go).  The trailer really wants to win a gammon for the match.  That gammon is worth twice as much as it is for money.<br><br>
+                    So what about <strong>-3,-1C</strong>?<br>
+                    Interestingly, in this case a gammon is nearly worthless for the trailer.  Consider: If the trailer wins one point the score will be -2, -1 <strong>Post</strong> Crawford, which means the trailer can double and make the next game worth two points.  This result is nearly identical to the trailer winning two points and getting to -1, -1.  In either case, the next game will be for the match.  So this score plays just like DMP.  (Yes, a backgammon is very helpful at -3,-1C.  But backgammons are rare, and seem not to affect opening play the way gammons do.)<br><br>
+                    <strong>-4 -1C</strong>?<br>
+                    Things are different once again.  Now the trailer wants a gammon, but only by the same degree as for money (half as much as at GG).  So at this hybrid score, the trailer doesn't need an advanced anchor to prevent gammons, but is only normally aggressive in producing gammons.<br><br>
+                    <strong>-5-1C; -7-1C; -9,-1C</strong> (etc) all play like DMP for the same reasons given above.<br><br>
+                    <strong>-6,-1C; -8-1C</strong> (etc) all play like the hybrid -4, -1C described above.</p>
+                </fieldset>
+                <fieldset data-role="collapsible"   >
+                    <legend>Post-Crawford Scores</legend>
+                    <p><strong>-1, -2 Post Crawford</strong><br>
+                    When the leader opens he should assume the trailer will double next roll and make this game worth the match.  So the leader should play as though at <strong>DMP.</strong>  (There are two cases where he should <strong>pass</strong> the trailer's double and play the next game for the match: <strong>51</strong> and <strong>43.</strong>)<br><br>
+                    The trailer has some counter-intuitive opening plays at this score.  You might think he should play more aggressive since he is behind, but this turns out not to be the case.  What happens after he slots his opening 21?  There are two variations to consider.  First, suppose the leader now rolls poorly and fails to hit the slot.  Now the trailer will double and the leader has a clear pass (preferring to play an even game for the match instead of this one).  Second, suppose the leader instead hits the slot.  The trailer will still double and the leader will take.  What we see is that the trailer gets stuck with the downsides of slotting, but never gets to keep the rewards.  If the slot works, the leader will pass the double.  So at this score, the trailer should not make high-variance plays like slotting and building which can only go wrong when blots are hit.  Instead, the trailer should open by <strong>splitting</strong> (or even playing two up), in order to grab a small gain with minimal risk.<br><br>
+                    <strong>-1, -3 Post Crawford</strong><br>
+                    When the leader opens he should assume the trailer will double next roll which will make this game Gammon Save-ish for the leader.  So he should play as though at GS from the start.<br>
+                    Similarly, when the trailer opens he should assume he will double next roll producing Gammon Go, so he should open as though at Gammon Go.<br><br>
+                    <strong>-1, -4 Post Crawford</strong><br>
+                    The leader should open as though at <strong>GS</strong>, while the trailer should open by splitting as described above for -1, -2.<br><br>
+                    <strong>-1, -5 Post Crawford</strong><br>
+                    Gammon Save for the leader and Gammon Go for the trailer.</p>
+                </fieldset>
+                <fieldset data-role="collapsible"   >
+                    <legend>Pre-Crawford</legend>
+                    <p>The score <strong>-2, -2</strong> is likely to become DMP after an early cube turn, so it should be played like DMP from the start.<br><br>
+                    Other even scores (<strong>-3, -3; -4, -4; -5, -5</strong>) are generally Money-ish.<br><br>
+                    Any lead in a five-point match is potentially significant, pushing Money-like plays closer to GG or GS-like plays.  Factors that influence where a score lies on the continuum from Money to GG/GS:<ul><li>Size of lead</li><li>Distance from end of match</li><li>Gammon efficiency</li></ul>
+                    So <strong>-3, -5</strong> is more polarized than <strong>-4, -5</strong> (size); <strong>-2, -3</strong> is more polarized than <strong>-4, -5</strong> (distance); and <strong>-2, -4</strong> is the most polarized of all given the size of the lead, the closeness to the end, and the perfect efficiency of gammons winning the match for the trailer.  For example, -2, -4 is the only Pre-Crawford score where the trailer slots with an opening 62.</p>
+                </fieldset>
+                </div>
+                <br><br>    
+            </div><!-- /content -->
+        </div><!-- page -->
+
+    <div data-role="page" id="hint3" data-title="Hint: Two-Checker" data-theme="a">
+            <div class="whitebar"></div>
+            <div class="redbar"></div>
+            <div class="whitebar"></div>
+            <br>
+
+            <div class="ui-content willScroll AboutContent">
+                <div data-role="collapsible-set" data-corners="false" >
+            	<fieldset data-role="collapsible"  >
+                    <legend>Why Bearoffs?</legend>
+                    <p>You may or may not find late bearoffs fun, but you can't deny their importance.  Mistakes can swing a ton of equity, and the cube is usually already in play.  You want to know what you're doing.<br><br>
+                    Also, these positions tend to illustrate cube theory fundamentals which is great training for beginners.<br><br>
+                    The notes below assume you understand how to count rolls in 36, why there are 11 ways to roll an ace, and that you generally need 25% winning chances to take a cube.  For a good introduction to these topics, <a href='#' onclick="window.open('http://www.bkgm.com/articles/Townsend/BasicsOfBackgammon2.html', '_system', 'location=no')">try this article.</a><br><br>
+                    Or pick up a copy of <a href='#' onclick="window.open('http://www.fortuitouspress.com/bootcamp', '_system', 'location=no')">Backgammon Boot Camp</a>.</p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Basic Bearoff Math</legend>
+                    <p><strong>Last-roll bearoff</strong><br>
+                    White doubles.  Can Red take?<br><br>
+                    <img src='inappimages/HintImages/2x2DT.png' alt='image' style='width:50%; max-width:300px'><br><br>
+                    White will win unless he rolls an ace.  Since there are eleven aces, Red can take.  (Remember, Red needs 25%, or 9 out of 36 rolls.  11 wins gives him a comfortable margin.)<br><br><br>
+                    <strong>Two-roll bearoff</strong><br>
+                    White doubles.  Can Red take?<br><br>
+                    <img src='inappimages/HintImages/2x2DP.png' alt='image' style='width:50%; max-width:300px'><br><br>
+                    This time we need to count two-roll sequences out of 36 x 36 = 1296.  Our take criterion is 1/4 of 1296 = 324.<br><br>
+                    For Red to win, two things must happen: White must miss, then Red must not miss.  White wins on roll 17 times, leaving 19 misses.  After those 19 misses, Red wins 17 times.  19 x 17 = 323, so this is a bare, bare, pass.<br><br>
+                    There is additional complexity when Red gets to redouble after White misses.  See <a href='#' onclick="window.open('http://www.bkgm.com/articles/Kleinman/CubOffsAndTheCrippledCube/index.html', '_system', 'location=no')">this classic Kleinman essay</a> for a helpful shortcut.</p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Cube Action Guidelines</legend>
+                    <p>In addition to analysis there is always memorization.  Bob Koca wrote <a href='#' onclick="window.open('http://www.bkgm.com/articles/Koca/CuringYourShortBearoffBlues.html', '_system', 'location=no')">the definitive work</a> on two-checker cube-action guidelines.  His four rules (plus sub-rules and exceptions) cover <em>every</em> case. The concepts are not trivial, however.  You'll need to read the article more than once.<br><br>
+                    Here are Koca's guidelines (paraphrased).  Start by learning the main rules, then add in the exceptions.<br><br>
+                    <strong>1. Redouble / Pass with 27 or more winning numbers.</strong> The pass is optional when doubler has exactly 27 good numbers and the taker has 27 or more).<br><br>
+                    <strong>2a. Pass with the same or fewer winning numbers as the doubler.</strong>
+                    <ul><li>Unless the number of missing rolls are equal and between 19 and 26</li><li>Unless the position is 34 vs 34 or 66 vs 66.</li></ul>
+                    <strong>2b. Take with more winning numbers than the doubler.</strong>
+                    <ul><li>Unless the position is (36 or 45) vs 44 or 55 vs 64.</li></ul>
+                    <strong>3. All positions not good enough for an initial double are beavers.</strong>
+                    <ul><li>Except 56 vs (33 or 34)</li><li>Except 66 vs 44.</li></ul>
+                    <strong>4. All initial doubles are redoubles.</strong>
+                    <ul><li>Except the <a href='#' onclick="window.open('http://www.bkgm.com/articles/Koca/CuringYourShortBearoffBlues.html', '_system', 'location=no')">Jacoby Paradox</a> positions</li><li>Except (33 or 34) vs (22 or 23)</li><li>Except (16 or 35 or 26) vs (24 or 15)</li><li>Except 46 vs 25</li><li>Except 56 vs 16</li><li>Except 66 vs (36 or 45)</li></ul></p>
+                </fieldset>
+                </div>
+                <br><br>    
+            </div><!-- /content -->
+        </div><!-- page -->
+
+    <div data-role="page" id="hint4" data-title="Hint: Three-Checker">
+
+            <div class="whitebar"></div>
+            <div class="redbar"></div>
+            <div class="whitebar"></div>
+            <br>
+
+            <div class="ui-content willScroll AboutContent">
+                <div data-role="collapsible-set" data-corners="false" >
+            	<fieldset data-role="collapsible"  >
+                    <legend>Roll v Roll Cube Actions</legend>
+                    <p><table class='tablehintclass table-stripe' cellspacing='5' cellpadding='5' style='border:1px solid black'><tr><th width='50' style='text-align:left'>Rolls</th><th width='60' style='text-align:left'>Win%</th><th style='text-align:left'>Cube Action</th></tr><tr><td>2</td><td>13.9%</td><td>Double - Pass</td></tr><tr><td>3</td><td>21.2%</td><td>Double - Pass</td></tr><tr><td>4</td><td>25.5%</td><td>Double - Take</td></tr><tr><td>5</td><td>28.3%</td><td>Double - Take</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>No Redouble - Take</td></tr></table><br>
+                    This table gets my vote as the first thing any aspiring backgammon player should memorize.  It's simply that foundational.<br><br>
+                    An n-roll position is one in which each side needs n rolls to bear off, assuming that no one rolls a set of doubles.  So three (or four) checkers on the ace v. three (or four) checkers on the ace is a <strong>2-roll</strong> position; five (or six checkers) on the ace v. five (or six) checkers on the ace is a <strong>3-roll</strong> position, etc.<ul><li>2- and 3-roll positions are <strong>passes.</strong></li><li>4-rolls and beyond are <strong>takes.</strong></li><li>5-rolls and beyond are <strong>initial doubles</strong> only.</li></ul>What does this tell us about three-checker bearoffs?  First off it tells us that three-checkers-on-the-ace vs. three-checkers-on-the-ace is a big pass.</p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Roll v Roll Variation</legend>
+                    <p><strong>Two-roll variant</strong><br>
+                    White doubles.  Can Red take?<br><br>
+                    <img src='inappimages/HintImages/4x3DT.png' alt='image' style='width:50%; max-width:300px'><br><br>
+                    A basic 2-roll position gives Red 13.9%.  Here she has additional ways to win.<br><br>
+                    White can roll 21, 31, or 32, leaving Red on roll in a pure 2-roll position that she can cash.  Those six misses for White give Red an additional 16.67%.<br><br>
+                    13.9% + 16.67% is 30.57%.  Easy take.</p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Reference Positions</legend>
+                    <p><img src='inappimages/HintImages/3x3DT.png' alt='image' style='width:50%; max-width:300px'><br><br>
+                    White Doubles.  Bare take for Red.
+                    <br><br><br><br><img src='inappimages/HintImages/3x3DT2.png' alt='image' style='width:50%; max-width:300px'><br><br>
+                    White Doubles.  Bare take for Red.<br><br><br><br>
+                    <img src='inappimages/HintImages/3x3ND.png' alt='image' style='width:50%; max-width:300px'>
+                    <br><br>Close no-double for White.</p>
+                </fieldset>
+                </div>
+                <br><br>    
+            </div><!-- /content -->
+        </div><!-- page -->
+
+    <div data-role="page" id="hint5" data-title="Hint: Match Equities" data-theme="a">
+
+            <div class="whitebar"></div>
+            <div class="redbar"></div>
+            <div class="whitebar"></div>
+            <br>
+
+            <div class="ui-content willScroll AboutContent">
+                <div data-role="collapsible-set" data-corners="false" >
+            	<fieldset data-role="collapsible"  >
+                    <legend>Why Match Equity Table?</legend>
+                    <p>Say you're leading <strong>3-away, 4-away</strong> and your opponent redoubles to <strong>4.</strong>  If you take, this game will decide the match.  If you pass, you'll trail <strong>-3,-2.</strong>  So you should take if your winning chances in this game are better than your winning chances at -3,-2.<br><br>
+                    But what <em><strong>are</strong></em> your winning chances at -3,-2?  That's what a Match Equity Table will tell you.<br><br>
+                    This is not the first thing you need to know about backgammon.  It might not be in the top twenty.  But if you want to win a lot of matches, at some point you'll find that you need to know this table.<br><br>
+                    Memorizing it isn't trivial, but the tools below make it easy enough.<br><br>
+                    (Of course there's no <em>right</em> way to memorize.  Use whatever method you like and check your progress with the flashcards.)</p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>The Table</legend>
+                    <p><div><table class='tablehintclass ui-responsive table-stripe' data-role='table' data-mode='columntoggle' id='met'><thead><tr><th></th><th data-priority='1'>1</th><th data-priority='1'>2</th><th data-priority='1'>3</th><th data-priority='1'>4</th><th data-priority='2'>5</th><th data-priority='3'>6</th><th data-priority='3'>7</th><th data-priority='5'>8</th><th data-priority='6'>9</th></tr></thead><tbody><tr><th>1</th><td>50.0</td><td>67.7</td><td>75.1</td><td>81.4</td><td>84.2</td><td>88.7</td><td>90.7</td><td>93.3</td><td>94.4</td></tr><tr><th>2</th><td>32.2</td><td>50.0</td><td>59.9</td><td>66.9</td><td>74.4</td><td>79.9</td><td>84.2</td><td>87.5</td><td>90.2</td></tr><tr><th>3</th><td>24.9</td><td>40.1</td><td>50.0</td><td>57.2</td><td>64.8</td><td>71.1</td><td>76.2</td><td>80.5</td><td>84.0</td></tr><tr><th>4</th><td>18.6</td><td>33.1</td><td>42.9</td><td>50.0</td><td>57.7</td><td>64.3</td><td>69.9</td><td>74.6</td><td>78.8</td></tr><tr><th>5</th><td>15.8</td><td>25.6</td><td>35.2</td><td>42.3</td><td>50.0</td><td>56.6</td><td>62.6</td><td>67.8</td><td>72.5</td></tr><tr><th>6</th><td>11.3</td><td>20.1</td><td>28.9</td><td>35.7</td><td>43.4</td><td>50.0</td><td>56.3</td><td>61.6</td><td>66.8</td></tr><tr><th>7</th><td>9.3</td><td>15.8</td><td>23.8</td><td>30.1</td><td>37.4</td><td>43.7</td><td>50.0</td><td>55.5</td><td>60.9</td></tr><tr><th>8</th><td>6.8</td><td>12.5</td><td>19.5</td><td>25.4</td><td>32.2</td><td>38.4</td><td>44.5</td><td>50.0</td><td>55.4</td></tr><tr><th>9</th><td>5.6</td><td>9.8</td><td>16.0</td><td>21.2</td><td>27.5</td><td>33.2</td><td>39.2</td><td>44.6</td><td>50.0</td></tr></tbody></table><br>
+                    </div>
+                    This is what we're trying to memorize.  Numbers across the top are points needed by <strong>Opponent.</strong>  Numbers along the left are points needed by <strong>You.</strong>  So when you lead -2,-3, your match winning chances are 59.9%.<br><br>
+                    Note that half the table is redundant: when you trail -3,-2, your match winning chances are 40.1% (100% - 59.9%).</p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Neil's Numbers</legend>
+                    <p>Neil Kazaross came up with a wonderful method to easily derive most of the values of the Match Equity Table.  Here's how it works:<br>
+                    <table class='tablehintclass table-stripe' cellspacing='5' cellpadding='5' style='border:1px solid black; width:auto'><tr><th colspan='8' align='center'>Neil's New Numbers</th></tr><tr><th align='left'>Trailer</th><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td></tr><tr><th align='left'>Neil</th><td>7.5</td><td>7.0</td><td>6.5</td><td>6.0</td><td>5.67</td></tr></table><br>
+                    For a given match length remaining (Trailer value), Neil's Number estimates the advantage conferred by each point of the leader's margin.  For example:<br><br>
+                    <strong>-6,-4</strong>: Trailer needs 6 so NN = 7.0 (see table).  Leader's margin is 2, so advantage is 7 x 2 = 14.  Leader's winning chances are 50 + 14 = <strong>64%.</strong>  Trailer's winning chances are 50 - 14 = <strong>36%.</strong>  (Actual values are 64.28 and 35.71.)<br><br>
+                    <strong>-8,-3</strong>: Trailer needs 8 so NN = 6.0 (see table).  Leader's margin is 5, so advantage is 6 x 5 =30.  Leader's winning chances are 50 + 30 = <strong>80%.</strong>  Trailer's winning chances are 50 - 30 = <strong>20%.</strong>  (Actual values are 80.47 and 19.53.)<br><br>
+                    <strong>Limitations:</strong> Doesn't work when Trailer needs 4 or fewer, or when Leader needs 2 or fewer.  For example, NN predicts that <strong>-5,-2</strong> should be 72.5% for Leader, when in fact it is 74.36%.  Neil advises simple memorization for scores that close to the end of a match.<br><br>
+                    <em>However</em> . . .</p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Neil's Numbers Extended</legend>
+                    <p>With a few tweaks we can extend Neil's Numbers to include Trailer values of 4 and 3, and leader values of -2.  That is, we can cover pretty much all values in the table other than the 1-away Crawford scores.  Here's how:<br><br>
+                    <strong>A.</strong>
+                    <table class='tablehintclass table-stripe' cellspacing='5' cellpadding='5' style='border:1px solid black; width:auto'><tr><th colspan='8' align='center'>When Leader Needs 2</th></tr><tr><th align='left'>Trailer</th><td width='10'>5</td><td>6</td><td>7</td><td>8</td><td>9</td></tr><tr><th align='left'>Actual %</th><td>74.4</td><td>79.9</td><td>84.2</td><td>87.5</td><td>90.2</td></tr><tr><th align='left'>NN %</th><td>72.5</td><td>78.0</td><td>82.5</td><td>86.0</td><td>89.7</td></tr></table><br>
+                    Neil's Numbers are consistently off for these 2-away scores.  But the key word here is <em><strong>consistently.</strong></em>  When trailer needs 5-8, just add 2 to the Leaders win percentage to get an accurate result.<ul><li>72.5 + 2 = 74.5 which estimates 74.4</li><li>78.0 + 2 = 80.0 which estimates 79.9</li><li>82.5 + 2 = 84.5 which estimates 84.2</li><li>86.0 + 2 = 88.0 which estimates 87.5</li></ul>
+                    You'll have to remember <strong>not</strong> to use this adjustment for -9,-2 where it isn't needed.  (In fact, when using NN to estimate -10,-2 and beyond, you'll need to <em>subtract</em> from the Leader's advantage.  But let's restrict our focus to the 9-point table.)<br><br>
+                    <strong>B.</strong><br><br>
+                    With the adjustment above in mind, we can accurately extend the Neil's Numbers table for Trailer values of 3 and 4:<br><br>
+                    <table class='tablehintclass table-stripe' cellspacing='5' cellpadding='5' style='border:1px solid black; width:auto'><tr><th colspan='8' align='center'>Neil's New Numbers Extended</th></tr><tr><th align='left'>Trailer</th><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td></tr><tr><th align='left'>Neil</th><td>8.0</td><td>7.5</td><td>7.5</td><td>7.0</td><td>6.5</td><td>6.0</td><td>5.67</td></tr></table><br>
+                    For example, <strong>-4,-3</strong> gives 57.5% for the Leader (actual value is 57.2%), and <strong>-4,-2</strong> gives 67% for the Leader (actual value is 66.9%).<br><br>
+                    This extended table along with the "+2 for 2-away" rule (excluding -9,-2) gives accurate results for the entire 9-point Match Equity Table, save for the 1-away Crawford equities.</p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Crawford Equities</legend>
+                    <p>Due to the peculiarities of the Crawford Rule, the Crawford Equities are their own thing and follow none of the patterns that regulate the rest of the table.  They are best off memorized separately.  Fortunately, there aren't that many of them:<table class='tablehintclass table-stripe' cellspacing='5' cellpadding='5' style='border:1px solid black'><tr><th colspan='8' align='center'>Crawford Win %</th></tr><tr><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td></tr><tr><td>68</td><td>75</td><td>81</td><td>84</td><td>89</td><td>91</td><td>93</td><td>94</td></tr></table><br>
+                    So <strong>-1,-3c</strong> is 75%, and <strong>-1,-6c</strong> is 89%.  But how to memorize these numbers?<br><br>
+                    Well, can you memorize the phone number 763-5221?  Great, you're almost done.  Next memorize the first value on the table: <strong>-1,-2c</strong> = 68%.<br><br>
+                    Now, if you want to get the next number in the sequence, add the first digit of the phone number to 68: 68 + 7 = 75.  Add the next digit to get the next number: 75 + 6 = 81.<br><br>
+                    So, what's <strong>-1,-8?</strong><br>
+                    68 + 7 + 6 + 3 + 5 + 2 + 2 = 93.</p>
+                </fieldset>
+                </div>
+                <br><br>   
+            </div><!-- /content -->
+        </div><!-- page -->
+
+    <div data-role="page" id="hint7" data-title="Hint: Take Points" data-theme="a">
+
+            <div class="whitebar"></div>
+            <div class="redbar"></div>
+            <div class="whitebar"></div>
+            <br>
+
+            <div class="ui-content willScroll AboutContent">
+                <div data-role="collapsible-set" data-corners="false" >
+            	<fieldset data-role="collapsible"  >
+                    <legend>Take Point Basics</legend>
+                    <p><table class='tablehintclass' cellspacing='5' cellpadding='5' style='border:1px solid black'><tr><th>Risk / (Risk + Gain)</th></tr></table><br>
+                    This calculation provides your Gammonless Raw Take-Point for both Money <em><strong>and</strong></em> Match-Play.  Let's start with the simple case:<br><br>
+                    <strong>Money:</strong> You are doubled to 2.  There are three possible outcomes:<br><br>
+                    <table class='tablehintclass' cellspacing='5'><tr><td>Take-Win:</td><td>+2</td></tr><tr><td>Pass:</td><td>-1</td></tr><td>Take-Lose:</td><td>-2</td></tr></table><ul><li><strong>Risk</strong> is the extra amount you might lose by taking instead of passing, in this case the difference between -1 and -2 = <strong>1</strong>.</li><li><strong>Gain</strong> is the extra amount you might win by taking instead of passing, in this case the difference between +2 and -1 = <strong>3</strong>.</li><li><strong>Risk / (Risk + Gain)</strong> is <strong>1 / (1 + 3)</strong> or <strong>1/4</strong> or <strong>25%.</strong></li></ul>This is one of many ways to derive your standard 25% take-point.<br><br>
+                    <strong>Match-Play:</strong> You lead <strong>-3,-4</strong> and have already doubled to 2.  There were unpleasantries, and now you are redoubled to 4.  Again, there are three possible outcomes:<br><br>
+                    <table class='tablehintclass' cellspacing='5'><tr><td>Take-Win:</td><td>(Win match)</td><td>100%</td></tr><tr><td>Pass:</td><td>(Trail -3,-2)</td><td>40%</td></tr><tr><td>Take-Lose:</td><td>(Lose match)</td><td>0%</td></tr></table><br>
+                    (The 40% value for -3,-2 comes the Match Equity Table.)<ul><li><strong>Risk</strong> is the difference between 40% and 0% = <strong>40%</strong>.</li><li><strong>Gain</strong> is the difference between 100% and 40% = <strong>60%</strong>.</li><li><strong>Risk / (Risk + Gain)</strong> is <strong>40% / (40% + 60%)</strong> or <strong>40/100</strong> or <strong>40%.</strong></li></ul>Observations:<ul><li>This calculation ignores gammons and recubes.  Recubes are discussed below.</li><li>The 40% comes from the Match Equity Table.  This is why you memorize a Match Equity Table.</li><li>The 40% take-point at this score is radically different from 25%.  Not understanding this will cost you a lot of matches.</li><li>More complicated examples are discussed below.</li></ul></p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>A More Complex Example</legend>
+                    <p>You trail <strong>-4,-3</strong> and are doubled to 2.  There are three possible outcomes:<br>
+                        <table class='tablehintclass' cellspacing='5'><tr><td>Take-Win:</td><td>(Lead -2,-3)</td><td>60%</td></tr><tr><td>Pass:</td><td>(Trail -4,-2)</td><td>33.1%</td></tr><tr><td>Take-Lose:</td><td>(Trail -4,-1c)</td><td>18.6%</td></tr></table><ul><li><strong>Risk</strong> is the difference between 33.1% and 18.6% = <strong>14.5%</strong>.</li><li><strong>Gain</strong> is the difference between 60% and 33.1% = <strong>26.9%</strong>.</li><li><strong>Risk / (Risk + Gain)</strong> is <strong>14.5% / (14.5% + 26.9%)</strong> or <strong>14.5 / 41.4</strong> or <strong>35%.</strong></li></ul>Why is this a more complex example?<ul><li>The math is harder.  The math is easy when taking the cube means that win-or-lose, the game will decide the match.  Then your take point is simply the match equity you get from passing.  Here, however, you have to divide 14.5 by 41.4 in your head.</li><li>35% is not the complete answer, because it does not take <em><strong>recube equity</strong></em> into account.  See below . . . </li></ul></p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Dead Cube v. Live Cube</legend>
+                    <p>You trail <strong>-4,-3</strong> and are doubled to 2.<br>
+                    <table class='tablehintclass' style='border:1px solid black; width:auto' cellspacing='5' cellpadding='5'><tr><th align='left' width='100'>Dead Cube</th><th>Live Cube</th></tr><tr><td>35.2%</td><td>21.1%</td></tr></table><br>
+                    We calculated the <strong>Dead Cube</strong> value in the section above.  It's your true take point in situations where you will never be able to redouble.  For example, the last-roll bearoff below is an easy take for money with 11/36 wins = 30.55%  But when trailing <strong>-4,-3</strong> you must pass since your wins are below 35% and you will never get to redouble.<br><br>
+                    <img src='inappimages/HintImages/2x2DT.png' alt='image' style='width:50%; max-width:300px'><br><br>
+                    <strong>Live Cube</strong> covers all the other cases where you <em>will</em> be able to redouble.  Since having access to a live cube is a benefit, a Live Cube take point will be lower than a Dead Cube take point.  The difference between the two is a measure of the power of the upcoming recube.  In this case, we already know the recube is particularly powerful: 3-away's take point on the recube is a very high 40% (see Take Point Basics).  That accounts for the large difference between the Dead Cube and Live Cube values on this initial double.<br><br>
+                    Observations:<ul><li>The Live Cube value calculation is based on the simplifying assumption of perfectly efficient recubes.  In real life, recubes are rarely perfectly efficient.  So your <em><strong>actual</strong></em> take point lies somewhere between the Dead Cube and Live Cube values.  For instance, in a long race at this score of <strong>-4,-3</strong>, your actual take point on the initial cube seems to be just above <strong>24%.</strong></li><li>Live Cube take points are generally hard to calculate.  Instead, your goal might be to develop a feel for how powerful the recube will be, and thereby estimate difference between the Dead Cube and Live Cube values.</li></ul></p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Automatic Recubes</legend>
+                    <p>The Live Cube take point can be easily calculated in cases involving Automatic Recubes:<br><br>
+                    You trail <strong>-5,-2</strong> and are doubled to 2.  If you take and get another turn, you will immediately redouble since you have nothing extra to lose.  Let's compare the last-roll (Dead Cube) case with the non-last-roll (Live Cube) case:<br>
+                    <table class='tablehintclass' cellspacing='5' cellpadding='5' style='border:1px solid black; width:auto'><tr><th></th><th>Dead</th><td width=60></td><th>Live</th></tr><tr><th style='text-align:left'>T-W</th><td>-3,-2</td><td>40%</td><td>-1,-2c</td><td>68%</td></tr><tr><th style='text-align:left'>Pass</th><td>-5,-1c</td><td>15.8%</td><td>-5,-1</td><td>15.8%</td></tr><tr><th style='text-align:left'>T-L:</th><td>Lose</td><td>0%</td><td>Lose</td><td>0%</td></tr></table><br>
+                    On the last roll with a <strong>Dead Cube</strong>, your take point is 15.8 / 40 = <strong>39.5%</strong>.  You need to be <em>very</em> cautious to take a match-losing cube when your wins remain at the two-level.<br><br>
+                    With a <strong>Live Cube</strong> and an Automatic Redouble, your take point is 15.8 / 68 = <strong>23.2%</strong><br><br>
+                    This Live Cube is easy to calculate exactly because you don't have to worry about recube efficiency.  You will simply redouble as soon as you can.</p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>When Not To Do Math</legend>
+                    <p>Learning how to calculate take points is essential for tournament backgammon.  Learning when <em><strong>not</strong></em> to is just as important.  Watch the top players.  For the most part, you simply won't see that much mental arithmetic.  Here's why:<ul><li>Study and memorize all take points within the <strong>Five-Point match.</strong>  There aren't all that many of them and they come up <em>all</em> the time.  Confirm that you know how to derive them, then use the flashcards to get them down pat.  You'll be glad you did.  (Kit Woolsey wrote this <a href='#' onclick="window.open('http://www.bkgm.com/articles/GOL/Aug99/fivept.htm', '_system', 'location=no')">great article</a>  on all the cubes of the five-point match.  He used an earlier table, so his numbers are sometimes dated.  Highly recommended.)</li><li><strong>Cubes that will decide the match for either player.</strong>  As described above in Take Point Basics, these always reduce to the match winning chances you get from passing.</li><li><strong>Initial cubes outside the Five-Point match.</strong>These are all pretty close to money.  They may vary by a percent or two, but don't waste your time with them during a match.</li></ul>
+                    So when <em>is</em> math called for?  Anytime outside these cases where a cube will swing a ton of equity.<br><br>
+                    You're leading <strong>-3,-9</strong> and you took an early 2-cube.  You turned things around and played on throughout the middle game in hopes of a gammon.  The game resolved into a race and now you're thinking of cubing to 4, but you know to be wary of the automatic 8-cube you'll face after a take.  How conservative do you need to be?  What is his take point anyway?<br><br>
+                    From his persepctive:<table class='tablehintclass' cellspacing='5'><tr><td>Take-Win:</td><td>(Lead -1c,-3)</td><td>75.1%</td></tr><tr><td>Pass:</td><td>(Trail -9,-1c)</td><td>5.6%</td></tr><tr><td>Take-Lose:</td><td>(Lose match)</td><td>0%</td></tr></table><br>
+                    His take point is 5.6/75.1 = <strong>7.5%.</strong>  So you can't even think of redoubling until you're over 90% (or you get to the last roll).</p>
+                </fieldset>
+                </div>
+                <br><br>   
+            </div><!-- /content -->
+        </div><!-- page -->
+
+        <div data-role="page" id="hint9" data-title="Hint: Opening Replies" data-theme="a">
+
+            <div class="whitebar"></div>
+            <div class="redbar"></div>
+            <div class="whitebar"></div>
+            <br>
+            <div class="ui-content willScroll AboutContent">
+                <div data-role="collapsible-set" data-corners="false" >
+                    <fieldset data-role="collapsible"  >
+                        <legend>The Opening Replies</legend>
+                        <p>At some point, you’ll want to learn the opening replies.  After all, each and every game will have a second roll so why not get it right?  The problem is that there are some 630 of them and many are not obvious.  How to come to terms with that much data?  How to memorize it for use over the board?<br><br>
+                        You're holding the answer.  This app presents a complete system for understanding and memorizing all the money-game opening replies, and more.  Understanding comes in the form of a set of rules based on the key features of each position.  Memorization is achieved through flashcards.<br><br>
+                        <a href='#' onclick="window.open('http://www.fortuitouspress.com/replies', '_system', 'location=no')">This paper</a> describes the system in full detail and is strongly recommended.  The topics below provide a quick-start guide, and are a helpful reference while using the flashcards.</p>
+                    </fieldset>
+                    <fieldset data-role="collapsible"  >
+                        <legend>How To Use These Decks</legend>
+                        <p><strong>Non-Doubles</strong> and <strong>Doubles</strong> Replies are considered separately.  Each set has six Main Rules, and most rules have a number of Subrules.  The Rules and Subrules will usually point to the best play.  Occasionally, they will point to a play that is "close enough" (within .01 of the best play), which is called a <em>"substitution."</em>  On rare occasions the rules point to a play that is wrong by more than .01, which is called an <em>"exception."</em><br><br>Best Plays and Substitutions are grouped together in "Positions" decks, while Exceptions are treated separately in their own decks.<br><br>
+                        <strong>Recommended study plan (for either Non-Doubles or Doubles):</strong><br><br>
+                        <strong>Step 1: </strong>Learn the six Main Rules of one set.  Use the Rules Deck to help memorization.  (Ignore the Subrules at this stage.)  <br>
+                        <strong>Step 2: </strong>Get familiar with the Subrules of that set.  Use the Rules Deck until you achieve a reasonable level of comfort.  Perfection is not required: you’ll get lots more practice in the next step.<br>
+                        <strong>Step 3: </strong>Apply the Rules and Subrules to positions, using the "Positions" deck for this set.  Expect to spend some time going back and forth between the flashcards and these hints (or the main paper) to fully internalize how the rules work.  Remember, applying the rules will always get you to within .01 of the best play in this group.<br>
+                        <strong>Step 4: </strong>Study the exceptions for this set on their own.  These plays are not rule-based and must be understood and memorized individually.  Fortunately, there aren't that many of them.<br>
+                        <strong>Step 5: </strong>Combine Position and Excpetion decks of one set to train together.  You’ll know you’re ready when the exceptions stand out immediately from the rest of the pack.</p>
+                    </fieldset>
+                    <fieldset data-role="collapsible"  >
+                        <legend>Basic Nactation</legend>
+                        <p>Backgammon Giant <strong>Nack Ballard</strong> created a popular system for describing moves made near the beginning of the game, called <em>Nactation</em>.  A full description of Nactation can be found <a href='#' onclick="window.open('http://www.nackbg.com/nactation.pdf', '_system', 'location=no')">here.</a><br><br>
+                        Our system employs some basic Nactation: D, P, R, $, S, U, Z.
+                        <ul>
+                            <li><strong>D = Down</strong>: Bring both checkers down from the Midpoint.  32D = 13/10 13/11.</li>
+                            <li><strong>P = Point</strong>: Make a point.  31P = 8/5 6/5.</li>
+                            <li><strong>R= Run</strong>: Play the full roll with a back checker.  63R = 24/15.</li>
+                            <li><strong>$ = Slot</strong>: Start an inner point with one checker, bring the other checker down.  21$ = 13/11 6/5.</li>
+                            <li><strong>S = Split</strong>: Play the larger number from the rear and the smaller from the Mid.  43S = 24/20 13/10.</li>
+                            <li><strong>U = Up</strong>: Move each of the back checkers.  43U = 24/20 24/21.</li>
+                            <li><strong>Z = Reverse Split</strong>: Play the smaller number from the rear and the larger from the Mid.  43Z = 24/21 13/9.</li>
+                        </ul>
+                        </p>
+                    </fieldset>            
+                    <fieldset data-role="collapsible"  >
+                        <legend>Non-Doubles</legend>
+                            <div data-role="collapsible-set" data-corners="false" >
+                                <fieldset data-role="collapsible"  >
+                                    <legend>Main Rules</legend>
+                                    <p>Just like the Opening Roll, the Non-Doubles Replies divide into four categories:
+                                    <ul>
+                                        <li><strong>Naturals (31, 42, 53, 61, 65)</strong></li>
+                                        <li><strong>Six-X (62, 63, 64): </strong>Split, Run, or Point?</li>
+                                        <li><strong>Ace-X (21, 41, 51): </strong>Split or Slot?</li>
+                                        <li><strong>Others (23, 25, 34, 45): </strong>Split or Down?</li>
+                                    </ul>
+                                    However, a new feature of the replies is the opportunity to <strong>hit</strong>.  Is hitting always correct?  It turns out there is a clear structure to your hitting priorities:
+                                    <ol>
+                                        <li><strong>Hit Outside: </strong>Hit any blot outside your inner board.</li>
+                                        <li><strong>Naturals</strong></li>
+                                        <li><strong>Hit Inside: </strong>Hit loose on your 5 and 4 points.</li>
+                                    </ol>
+
+                                    If none of these conditions apply, the position will fall into one of the following <em>mutually-exclusive</em> categories:
+                                    <ol start = "4>">
+                                        <li><strong>Ace-X: </strong>Split with aces after an Opening Split or Point, otherwise Slot.</li>
+                                        <li><strong>Six-X: </strong>Split with 62, 63; With 64 hit on 3pt if possible, else Point.</li>
+                                        <li><strong>Others: </strong>Down after Down or 2pt, otherwise Split. (Z with 43; Down if S/Z are blocked.)</li>
+                                        </ol>
+                                    </p>
+                                </fieldset>
+                                <fieldset data-role="collapsible"  >
+                                    <legend>Subrules</legend>
+                                    <p>See <a href='#' onclick="window.open('http://www.fortuitouspress.com/replies', '_system', 'location=no')">the paper</a> for a full description of all the subrules, along with many example positions.  A summary table is provided below:
+                                    <ol>
+                                        <li><strong>Hit Outside: </strong>Hit any blot outside your inner board.
+                                            <ul>
+                                                <li>Hit in outfield rather than on your Bar.</li>
+                                                <li>With direct hit from 24 or 8pt, play from Mid. With hit from Mid, play from 24pt.
+                                                    <ul>
+                                                        <li>With 24/20*, 6s are played to 14Pt.</li>
+                                                        <li>After 6x split, 65 hits on Bar and Ace.</li>
+                                                    </ul>
+                                                </li>
+                                                <li>Forgo hitting on your Bar to make your 5pt.</li>
+                                            </ul>
+                                        </li><br>
+                                        <li><strong>Naturals</strong>
+                                            <ul>
+                                                <li>Forgo making 3pt to hit loose on 5pt.</li>
+                                            </ul>
+                                        </li><br>
+                                        <li><strong>Hit Inside: </strong>Hit loose on your 5 and 4 points.
+                                            <ul>
+                                                <li>With other checker: Hit again on 5, 4 (do not break 8pt), play from Mid, 24pt.</li>
+                                                <li>After 43U, hit from Mid rather than expose additional blots.</li>
+                                                <li>Forgo hitting on 4pt with 64.</li>
+                                            </ul>
+                                        </li><br>
+                                        <li><strong>Ace-X: </strong>Slot after Slot or Down, otherwise Split.
+                                            <ul>
+                                                <li>Hit twice inside with same checker only with 41 after ace-split.</li>
+                                                <li>Treat 21$ as a virtual point: Split.</li>
+                                                <li>Avoid direct shots in your outfield: Play from the rear.</li>
+                                            </ul>
+                                        </li><br>
+                                        <li><strong>Six-X: </strong>Split with 62, 63; With 64 hit on 3pt if possible, else Point.
+                                            <ul>
+                                                <li>Run after Slot or 61P.</li>
+                                                <li>Run past Down.  62, 63: Run past fortified 8pt.</li>
+                                                <li>Avoid direct shots in your outfield: Slot.</li>
+                                            </ul>
+                                        </li><br>
+                                        <li><strong>Others: </strong>Down after Down or 2pt, otherwise Split (Z with 43).
+                                            <ul>
+                                                <li>Slot 4pt with deuces after weak slots (51$, 62$).  Play other number down.</li>
+                                                <li>Hit 6/1* with 5s after 6x Split.  Split other checker.</li>
+                                                <li>Hit on 3 and 2pts with 32, 43.  Split other checker. (Down after 52S.)</li>
+                                            </ul>
+                                        </li>
+                                    </ol></p>
+                                </fieldset>
+                                <fieldset data-role="collapsible"  >
+                                    <legend>Exceptions</legend>
+                                    <p>
+                                        <div data-role="collapsible-set" data-corners="false" >
+                                        <fieldset data-role="collapsible"  >
+                                            <legend><table><tr><td style="width:100px">Hit Outside: </td><td>41$ 43</td></tr></table></legend>
+                                            <p>
+                                            <img src='inappimages/HintImages/41$43.png' alt='image' style='width:100%; max-width:500px'><br><strong>41$ 43: 24/20* 24/21</strong><br>Rule 1B suggests playing from the Mid with the second checker after hitting from the rear.  In this case, however, the imminent blot-hitting contest means that anchoring is a higher priority than building.</p>
+                                        </fieldset>
+                                        <fieldset data-role="collapsible"  >
+                                            <legend><table><tr><td style="width:100px">Naturals: </td><td>43U 65</td></tr></table></legend>
+                                            <p><img src='inappimages/HintImages/43U65.png' alt='image' style='width:100%; max-width:500px'><br><strong>43U 65: 24/18 13/8</strong><br>The only (non-hitting) exception to a Natural.  In reply to the rare 43U, split for better outfield coverage and more ammunition for your subsequent attack.  Note the significant duplication of Opener's aces that either hit or anchor.</p>
+                                        </fieldset>
+                                        <fieldset data-role="collapsible"  >
+                                            <legend><table><tr><td style="width:100px">Hit Inside: </td><td>(43S, 43U) 43</td></tr></table></legend>
+                                            <p>Rule 3A suggests bringing a second checker down from the Mid after hitting from the 8pt.  Here are two cases where the 4 is better played 24/20:<br><br><img src='inappimages/HintImages/43S43.png' alt='image' style='width:100%; max-width:500px'><br><strong>43S 43: 24/20 8/5*</strong><br>Coming up puts pressure on the outfield blot and duplicates Opener's 5s.<br><br>
+                                            <img src='inappimages/HintImages/43U43.png' alt='image' style='width:100%; max-width:500px'><br><strong>43U 43: 24/20 8/5*</strong><br>    
+                                            24/20 8/5*.  Playing down would expose a direct shot.</p>
+                                        </fieldset>
+                                        <fieldset data-role="collapsible"  >
+                                            <legend><table><tr><td style="width:100px">Ace-X: </td><td>(61P, 65R, 51S) 21</td></tr></table></legend>
+                                            <p>Rule 4 suggests splitting aces, unless after an opening slot or down.  Here are three exceptions when you roll a 21.  (Note that 21 is the most slottable of your aces -- the only one that should be slotted in the opening.)<br><br><img src='inappimages/HintImages/61P21.png' alt='image' style='width:100%; max-width:500px'><br><strong>61P 21: 13/11 6/5</strong><br>As stick writes, "If you split, how will you play your Sixes?"<br><br>
+                                            <img src='inappimages/HintImages/65R21.png' alt='image' style='width:100%; max-width:500px'><br><strong>65R 21: 13/11 6/5</strong><br>
+                                            One reason to split after an opening run is to create more hits when the advanced checker can't find safety.  But that doesn't apply when the advanced checker has already found safety.<br><br>
+                                            <img src='inappimages/HintImages/51S21.png' alt='image' style='width:100%; max-width:500px'><br><strong>51S 21: 24/21</strong><br>
+                                            A hard position.  You don't really want to split against a stacked position that is hoping to attack.  But you don't want to slot into a double-shot.  Best is the unusual 24/21.  Close behind is 13/11 6/5, which, depending on your opponent's expressiveness, may confer significant entertainment equity.</p>
+                                        </fieldset>                                                        
+                                        <fieldset data-role="collapsible"  >
+                                            <legend><table><tr><td style="width:100px">Ace-X: </td><td>64R 41</td></tr></table></legend>
+                                            <p><img src='inappimages/HintImages/64R41.png' alt='image' style='width:100%; max-width:500px'><br><strong>64R 41: 13/9 6/5</strong><br>Rule 4 suggests splitting, but slotting is best in this case.  Note that the outfield blot has both sixes and aces to find safety, so there is diminished utility in splitting to maximize hitting chances.</p>
+                                        </fieldset>
+                                        <fieldset data-role="collapsible"  >
+                                            <legend><table><tr><td style="width:100px">Six-X: </td><td>(31P, 43Z, 63R) 64</td></tr></table></legend>
+                                            <p>A few cases where making the deuce is not correct:<br><br>
+                                            <img src='inappimages/HintImages/31P64.png' alt='image' style='width:100%; max-width:500px'><br><strong>31P 64: 24/14</strong><br>
+                                            The worst time to make a deep point is when you're getting primed.<br><br>
+                                            <img src='inappimages/HintImages/43Z64.png' alt='image' style='width:100%; max-width:500px'><br><strong>43Z 64: 24/14</strong><br>
+                                            As above, avoid making your 2 point when you're in danger of being primed. (43S 64 provides an illustrative contrast: Opener has fewer good priming rolls, so making the deuce is best.)<br><br>
+                                            <img src='inappimages/HintImages/63R64.png' alt='image' style='width:100%; max-width:500px'><br><strong>63R 64: 24/18 13/9</strong><br>
+                                            Of all the opening runs, this outfield blot will have the hardest time finding safety.  65 is already safe, 64 has both aces and sixes, and 62 gets hit with your 64.  So this is the opening run against which you should play for contact.</p>
+                                        </fieldset>
+                                        <fieldset data-role="collapsible"  >
+                                            <legend><table><tr><td style="width:100px">Six-X: </td><td>21$ 62</td></tr></table></legend>
+                                            <p><img src='inappimages/HintImages/21$62.png' alt='image' style='width:100%; max-width:500px'><br><strong>21$ 62: 24/18 13/11</strong><br>Rule 5A suggests running after an opening slot.  But here that would mean running into a double shot with no duplication.</p>
+                                        </fieldset>
+                                        <fieldset data-role="collapsible"  >
+                                            <legend><table><tr><td style="width:100px">Others: </td><td>(32D, 43D, 65R) 52</td></tr></table></legend>
+                                            <p>Rule 6 suggests playing down after an opening down, otherwise split.  Here are three exceptions when you roll a weak 52:<br><br>
+                                            <img src='inappimages/HintImages/32D52.png' alt='image' style='width:100%; max-width:500px'><br><strong>32D 52: 24/22 13/8</strong><br>
+                                            You will be at a significant priming disadvantage after playing down, so split to maximize anchoring / hitting chances.<br><br>
+                                            <img src='inappimages/HintImages/43D52.png' alt='image' style='width:100%; max-width:500px'><br><strong>43D 52: 24/22 13/8</strong><br>
+                                            You will be at a significant priming disadvantage after playing down, so split to maximize anchoring / hitting chances.<br><br>
+                                            <img src='inappimages/HintImages/65R52.png' alt='image' style='width:100%; max-width:500px'><br><strong>65R 52: 13/8 13/11</strong><br>
+                                            In contrast to the above, splitting won't help you hit blots that aren't there.  Instead, cover the outfiled to hinder the last checker's escape.</p>
+                                        </fieldset>
+                                        <fieldset data-role="collapsible"  >
+                                            <legend><table><tr><td style="width:100px">Others: </td><td>64R 43</td></tr></table></legend>
+                                            <p><img src='inappimages/HintImages/64R43.png' alt='image' style='width:100%; max-width:500px'><br><strong>64R 43: 24/20 13/10</strong><br>An early 43 usually plays better as a reverse-split (24/21 13/9) than as a standard split (24/20 13/10).  This case is a tactical exception.  Your blot on the 10 point is vulnerable to a 54, which already plays well by making the opposing 9 point.  And when your blot on the 10 point is hit, you have 5s to anchor and 3s and Aces to hit back.  If your blot is on the 9 point, you have 4s to anchor and 2s and 4s to hit back.</p>
+                                        </fieldset>
+                                        <fieldset data-role="collapsible"  >
+                                            <legend><table><tr><td style="width:100px">Others: </td><td>51S 43</td></tr></table></legend>
+                                            <p><img src='inappimages/HintImages/51S43.png' alt='image' style='width:100%; max-width:500px'><br><strong>51S 43: 24/20 24/21</strong><br>Rule 6C suggests hitting 6/2* 24/21.  But it's not so important to take away half a roll after a weak 51S."</p>
+                                        </fieldset>
+                                        </div>
+                                    </p>
+                                </fieldset>                    
+                            </div>
+                    </fieldset>
+
+                    <fieldset data-role="collapsible"  >
+                        <legend>Doubles</legend>
+                            <div data-role="collapsible-set" data-corners="false" >
+                            <fieldset data-role="collapsible"  >
+                                <legend>Main Rules</legend>
+                                <p>Each Double Reply has a default play:
+                                <ol>
+                                    <li><strong>Aces: </strong>8/7(2) 6/5(2)</li>
+                                    <li><strong>Deuces: </strong>13/11(2) 6/4(2)</li>
+                                    <li><strong>Treys: </strong>24/21(2) 13/10(2)</li>
+                                    <li><strong>Fours: </strong>24/20(2) 13/9(2)</li>
+                                    <li><strong>Flakes: </strong>8/3(2) 6/1(2) if hitting, otherwise 13/3(2)</li>
+                                    <li><strong>Boxes: </strong>24/18(2) 13/7(2)</li>
+                                </ol>
+                            </fieldset>
+                            <fieldset data-role="collapsible"  >
+                                <legend>Subrules</legend>
+                                <p>See <a href='#' onclick="window.open('http://www.fortuitouspress.com/replies', '_system', 'location=no')">the paper</a> for a full description of all the subrules, along with many example positions.  A summary table is provided below:
+                                <ol>
+
+                                    <li><strong>Aces: </strong>8/7(2) 6/5(2)
+                                        <ul>
+                                            <li>24/22 6/5(2) after (non-6x) Split.</li>
+                                            <li>6/4*(2), if possible.</li>
+                                        </ul>
+                                    </li><br>
+                                    <li><strong>Deuces: </strong>13/11(2) 6/4(2)
+                                        <ul>
+                                            <li>24/22(2) 6/4(2) after Point or Down.</li>
+                                            <li>Hit blots on 20 or 9, with 6/4(2).</li>
+                                        </ul>
+                                    </li><br>
+                                    <li><strong>Treys: </strong>24/21(2) 13/10(2)
+                                        <ul>
+                                            <li>8/5(2) 6/3(2) if hitting on 5 or 3, or after Run.</li>
+                                            <li>13/7*(2) after 6x Split.</li>
+                                            <li>24/21(2) 8/5(2) after Slot or Down.</li>
+                                        </ul>
+                                    </li><br>
+                                    <li><strong>Fours: </strong>24/20(2) 13/9(2)
+                                        <ul>
+                                            <li>Point on blots on 5 or 4 (with 24/20(2) if possible).</li>
+                                            <li>Hit two blots (not on Ace) if possible.  Cover inner point or play 13/9(2) with your remaining moves, if any.</li>
+                                            <li>Hit blot on 16 with 13/9(2).</li>
+                                        </ul>
+                                    </li><br>
+                                    <li><strong>Fives: </strong>8/3(2) 6/1(2) if hitting, otherwise 13/3(2)</li><br>
+                                    <li><strong>Boxes: </strong>24/18(2) 13/7(2)</li>
+                                </ol></p>
+                            </fieldset>
+                            <fieldset data-role="collapsible"  >
+                                <legend>Exceptions</legend>
+                                <p>
+                                    <div data-role="collapsible-set" data-corners="false" >
+                                    <fieldset data-role="collapsible"  >
+                                        <legend><table><tr><td style="width:70px">Deuces: </td><td>(64S, 41S) 22</td></tr></table></legend>
+                                        <p>Unless responding to an opening down or point, the default deuces play is 13/11(2) 6/4(2).  Here are the two exceptions:<br><br>
+                                        <img src='inappimages/HintImages/64S22.png' alt='image' style='width:100%; max-width:500px'><br><strong>64S 22: 24/16*</strong><br>The only position where you hit in the outfield with 22.<br><br>
+                                        <img src='inappimages/HintImages/41S22.png' alt='image' style='width:100%; max-width:500px'><br>
+                                        <strong>41S 22: 24/22(2) 6/4(2)</strong><br>The 22 anchor goes up in value against a blot on the 9 point.  Why hit in the position above but not here?  Note the increased value of your 4 point when both opposing checkers are still behind it.</p>
+                                    </fieldset>
+                                    <fieldset data-role="collapsible"  >
+                                        <legend><table><tr><td style="width:70px">Deuces: </td><td>(52D, 61P) 22</td></tr></table></legend>
+                                        <p>Two excpetions to Rule 2A where you don't need to make the defensive play:<br><br>
+                                        <img src='inappimages/HintImages/52D22.png' alt='image' style='width:100%; max-width:500px'><br>
+                                        <strong>52D 22: 13/11(2) 6/4(2).</strong><br>The weakest opening down.<br><br>
+                                        <img src='inappimages/HintImages/61P22.png' alt='image' style='width:100%; max-width:500px'><br>
+                                        <strong>61P 22: 13/11(2) 6/4(2).</strong><br>The weakest opening point.</p>
+                                    </fieldset>
+                                    <fieldset data-role="collapsible"  >
+                                        <legend><table><tr><td style="width:70px">Treys: </td><td>(63R, 65R) 33</td></tr></table></legend>
+                                        <p>Unless responding to an opening run, down or slot, the default treys play is 24/21(2) 13/10(2).  Here are the two exceptions:<br><br>
+                                        <img src='inappimages/HintImages/63R33.png' alt='image' style='width:100%; max-width:500px'><br>
+                                        <strong>63R 33: 13/10(2) 6/3(2)</strong><br>Of course you hit on the 10 point.  The 3 point is the best remaining option, unstacking without breaking a point.<br><br>
+                                        <img src='inappimages/HintImages/65R33.png' alt='image' style='width:100%; max-width:500px'><br>
+                                        <strong>65R 33: 24/21(2) 13/10(2)</strong><br>The usual play after an opening run is 8/5(2) 6/3(2), focusing on offense while Opener has blots to clean up.  But this is the only run that doesn't leave blots, so the default play is best.</p>
+                                    </fieldset>
+                                    <fieldset data-role="collapsible"  >
+                                        <legend><table><tr><td style="width:70px">Treys: </td><td>(52D, 54D) 33</td></tr></table></legend>
+                                        <p>Rule 3C suggests 24/21(2) 8/5(2) after an opening down.  Here are the two exceptions: <br><br>
+                                        <img src='inappimages/HintImages/52D33.png' alt='image' style='width:100%; max-width:500px'><br>
+                                        <strong>52D 33: 8/5(2) 6/3(2)</strong><br>The weakest opening down.  The 21 anchor does not contest any outfield blots.  Go ahead and take the offensive lead.<br><br>
+                                        <img src='inappimages/HintImages/54D33.png' alt='image' style='width:100%; max-width:500px'><br>
+                                        <strong>54D 33: 24/21(2) 6/3(2)</strong><br>
+                                        This play doesn't show up anywhere else.  What's the story?  Perhaps the 2-squeeze: After you make the 3 point, Opener's normal 24/22 and 6/4 are blocked.  And none of the remaining options (8/6, 9/7, 13/11) are at all appealing.  As a result, subsequent rolls 23, 24, and 25 all play terribly.</p>
+                                    </fieldset>
+                                    <fieldset data-role="collapsible"  >
+                                        <legend><table><tr><td style="width:70px">Fours: </td><td>64S 44</td></tr></table></legend>
+                                        <p><img src='inappimages/HintImages/64S44.png' alt='image' style='width:100%; max-width:500px'><br><br><strong>64S 44: 24/16*(2)</strong><br>Rule 4C suggests hitting 24/16* with 13/9(2).  Best is 24/16*(2), though it's fairly close.  Memorize this position along with 64S 22 -- both exceptions involving unusual hits with doubles after 64R.</p>
+                                    </fieldset>
+                                    </div>
+                                </p>
+                            </fieldset>                    
+                            </div>
+                    </fieldset>
+                </div><!-- /Collapsible Set -->
+            </div><!-- /content -->
+        </div><!-- page -->
+
+        <div data-role="page" id="hint28" data-title="Hint: Races" data-theme="a">
+
+            <div class="whitebar"></div>
+            <div class="redbar"></div>
+            <div class="whitebar"></div>
+            <br>
+
+            <div class="ui-content willScroll AboutContent">
+                <div data-role="collapsible-set" data-corners="false" >
+                <fieldset data-role="collapsible"  >
+                    <legend>Race Basics</legend>
+                    <p>Backgammon is fundamentally a race, so evaluating races accurately is of fundamental importance.  Anyone relying on “feel” is needlessly throwing away gobs of equity.<br><br>
+                    Accurate evaluation is a two-step process:
+                    <ul><li>Count the race</li><li>Determine the cube action from the count.</li></ul>
+                    Each step requires a little practice, though neither is particularly difficult.  If this material is new to you, your game is about to get a lot stronger.<br><br>
+                </p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Counting</legend>
+                    <p>The concept is straightforward.  A checker on the ace point is worth one pip.  A checker on the deuce point is worth two.  Two checkers on the three point are together worth six pips.  And so on.  Add up the pip totals for all the checkers of one player and you have that player’s pip count.  Then do the same for the other side.<br><br>
+                    There are shortcuts.  My favorite is the <strong>Mental Shift</strong>: Imagine moving your checkers to transform your position into a mirror image of your opponent’s (which will then share the same pip counts), and keep track of how many pips you have to move.  If you have to move your checkers a net of seven pips forward to match the other position, then you must be seven pips behind in the race right now.  I find this method quick and painless, and use it every time.  Once I have the difference count, I can do an absolute count of one side (if needed).<br><br>
+
+                    Find a detailed <a href='#' onclick="window.open('http://www.backgammon-biba.co.uk/PipCount.htm', '_system', 'location=no')">example here</a> (scroll down to "Mental Shift Method"), taken from page 129 of Magriel's "Backgammon."<br><br>
+                    Another excellent tool is <a href='#' onclick="window.open('http://www.bkgm.com/articles/McCool/cluster.html', '_system', 'location=no')">Cluster Counting.</a><br><br>
+                    There are many other tools, some of which achieve, in my opinion, an alarming level of complexity.  Your mileage may vary.  Here’s an <a href='#' onclick="window.open('http://www.bkgm.com/articles/page04.html#pip_counting', '_system', 'location=no')">index.</a><br><br>
+                    FlashBack provides efficient practice for counting races, however you choose to count them.  Go to Settings / Options and turn Pip Count off.  Open a position (racing or otherwise) and count the race.  When you tap the question to reveal the answer, the pip count will be revealed on the board.</p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Cube Action Table</legend>
+                    <p>You've counted the race.  Now what?<br><br>
+                    The table below provides the cube actions for happy “low-wastage” racing positions where most all the checkers are on the 4, 5, and 6 points (or will be able to get there during the bear-in).  Unhappy racing positions, with stacks of checkers on the ace and deuce points, are neither covered by the table nor included in these decks.  As Tolstoy wrote, “All happy racing positions are alike; each unhappy racing position must be evaluated individually.”<br>
+                    <table>
+                        <tr><th>Leader's Count</th><th>&nbsp&nbsp</th><th>Max Takeable Deficit</th></tr>
+                        <tr><td>122-111</td><td></td><td>13</td></tr>
+                        <tr><td>110-100</td><td></td><td>12</td></tr>
+                        <tr><td>99-89</td><td></td><td>11</td></tr>
+                        <tr><td>88-79</td><td></td><td>10</td></tr>
+                        <tr><td>78-70</td><td></td><td>9</td></tr>
+                        <tr><td>69-62</td><td></td><td>8</td></tr>
+                        <tr><td>61-54</td><td></td><td>7</td></tr>
+                        <tr><td>53-47</td><td></td><td>6</td></tr>
+                        <tr><td>46-40</td><td></td><td>5</td></tr>
+                        <tr><td>39-33</td><td></td><td>4</td></tr>
+                        <tr><td>32-26</td><td></td><td>3</td></tr>
+                        <tr><td>25-19</td><td></td><td>2</td></tr>
+                    </table>
+                    <br>
+                    For example, when 73 doubles 83, 83 should pass because the number of pips she trails by (10) is one greater than the cutoff value provided in the table (9).<br><br>
+                    <strong>Leader can redouble two pips shy of trailers point of last take, and can offer an initial double three pips shy of trailers point of last take.</strong><br><br>
+                    For example, 73 considers offering a double.  Point of last take is 9 pips down (from the table), or a pip count of 82.  Leader can redouble against a pip count of 80 (two pips shy of point of last take) and can offer initial double against 79 (three pips shy of point of last take).<br><br>
+                    Or, in table form:<br><br>
+                    <table>
+                        <tr><td colspan='3' style='text-align:center'><strong>Leader has 73</strong></td>
+                        <tr><td><strong>Trailer</strong></td><td>&nbsp&nbsp</td><td colspan='2'><strong>Cube Action</strong></td></tr>
+                        <tr><td>83</td><td></td><td>Redouble</td><td> - Pass</td></tr>
+                        <tr><td>82</td><td></td><td>Redouble</td><td> - Take</td></tr>
+                        <tr><td>81</td><td></td><td>Redouble</td><td> - Take</td></tr>
+                        <tr><td>80</td><td></td><td>Redouble</td><td> - Take</td></tr>
+                        <tr><td>79</td><td></td><td>Double</td><td> - Take</td></tr>
+                        <tr><td>78</td><td></td><td>No Double</td><td> - Take</td></tr>
+                    
+                    </table>
+
+                    </p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Trice’s Rule 62</legend>
+                    <p>The Cube Action Table above is not easy to memorize.  Fortunately, it can be constructed from some simple rules.  Here is Walter Trice's method, from page 136 of his <a href='#' onclick="window.open('http://www.fortuitouspress.com/bootcamp', '_system', 'location=no')"><em>Backgammon Boot Camp</em>.</a><br><br>
+
+                    <ol>
+                    <li>
+                        <strong>For pip counts below 62:</strong><br>
+                    Leader’s pip count.  Subtract 5, divide by 7, round down.<br><br>
+                    For example:  Leader’s count is 43.  Subtracting 5 leaves 38.  Dividing by 7 leaves 5 point 4 something, which rounds down to 5.  Which is the value in the table.<br><br></li>
+
+                    <li><strong>For pip counts above 62:</strong><br>
+                    Leader’s pip count.  Divide by 10, add 1, round up.<br><br>
+                    For example:  Leader’s count is 96.  Dividing by 10 leaves 9.6; adding 1 leaves 10.6; which rounds up to 11.  Which is the value in the table.
+                </li></ol>
+
+                    Simple.  Easy to use over the board.  Unfortunately, the second rule produces a number of answers that are off by one.  For example, Leader’s count is 79.  Dividing by 10 leaves 7.9; adding 1 leaves 8.9, which rounds up to 9.  But the actual value in the table is 10.<br><br>
+
+                    Specifically, pip counts of 122, 121, and 61 produce values one too high, and pip counts 100, 90, 89, 80, 79, and 70 produce values that are one too low.<br><br>
+
+                    What to do?  One path is to use Trice’s simple method and try to keep track of the exceptions.  At worst, you’ll be off by a pip.<br><br>
+
+                    Another path is Nack's Rule 57, below.</p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Nack’s Rule 57</legend>
+                    <p>Nack Ballard's <a href='#' onclick="window.open('http://www.bgonline.org/forums/webbbs_config.pl?noframes;read=59714', '_system', 'location=no')">Rule 57</a> is more accurate than Trice's Rule 62, at the expense of some more involved mental arithmatic.  The first part of the rule is the same as Trice's:<br><br>
+
+                    <ol><li><strong>For pip counts below 57:</strong><br>
+                    Leader’s pip count.  Subtract 5, divide by 7, round down.<br><br>
+                    For example:  Leader’s count is 43.  Subtracting 5 leaves 38.  Dividing by 7 leaves “5 point 4 something, which rounds down to 5.  Which is the value in the table.<br><br></li>
+
+                    <li><strong>For pip counts above 57:</strong></br>
+                    Leader’s pip count.  Subtract 33, double, take nearest integer square root.<br><br>
+                    For example:  Leader’s count is 79.  Subtracting 33 leaves 46; doubling leaves 92; nearest integer square root is 10.  Which is the value in the table.</li></ol>
+
+                    More difficult to use over the board than Trice’s formula.  Mentally subtracting 33 is harder than adding 1.  Finding the nearest integer square root is considerably harder than rounding up.<br><br>
+
+                    However, this formula is off by one in only one case, when Leader’s pip count is 111.  Subtracting 33 leaves 78, doubling leaves 156, nearest integer square root is 12.  The true value is 13.</p>
+                </fieldset>
+                </div>
+                <br><br>   
+            </div><!-- /content -->
+        </div><!-- page -->
+
+    <div data-role="page" id="hint30" data-title="Hint: Favorites" data-theme="a">
+
+            <div class="whitebar"></div>
+            <div class="redbar"></div>
+            <div class="whitebar"></div>
+            <br>
+
+            <div class="ui-content willScroll AboutContent">
+                <div data-role="collapsible-set" data-corners="false" >
+                <fieldset data-role="collapsible"  >
+                    <legend>Why Favorites?</legend>
+                    <p>Flashback's learning algorithm ensures that over time you will see more and more cards that you rate Hard, and fewer and fewer cards that you rate Easy.  In this way, Flashback creates your own personalized favorites lists.<br><br>
+                    But this can take some time.  Maybe you're browsing along and find a few cards that you want to drill right now?  No problem.  You can save any card as a Favorite, and then select the Favorites deck to study only the cards you have saved.</p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Saving as Favorite</legend>
+                    <p>Open the answer field of any card and scroll to the bottom.  Tap the plus (+) icon and the card will be saved to Favorites.  If you instead see a minus (-) icon, the card is already saved to Favorites.  Tap the minus icon to remove it from Favorties.  Either action will prompt a confirmation message.  And either action can be undone simply by tapping once again.</p> 
+                
+                </div>
+                <br><br>   
+            </div><!-- /content -->
+        </div><!-- page -->
+
+
+    <div data-role="page" id="hint19" data-title="Hint: Boot Camp" data-theme="a">
+
+            <div class="whitebar"></div>
+            <div class="redbar"></div>
+            <div class="whitebar"></div>
+            <br>
+
+            <div class="ui-content willScroll AboutContent">
+                <div data-role="collapsible-set" data-corners="false" >
+                <fieldset data-role="collapsible"  >
+                    <legend>About Boot Camp</legend>
+                    <p>Walter Trice's <a href='#' onclick="window.open('http://www.fortuitouspress.com/bootcamp', '_system', 'location=no')"><em>Backgammon Boot Camp</em></a> began as a series of online columns for GammonVillage, later to become argueably the most highly-regarded and best-selling backgammon book of its time.  Each short chapter introduces a concept such that a beginner can follow, but then develops that concept over five or so pages to places unfamiliar to many experts.  In this way, the book is accessable and informative to everyone.  (The dry humor and graceful clarity of the prose also help.)<br><br>
+                    These decks include every position from Backgammon Boot Camp and more.  Find the position name at the bottom of the exposed answer text.
+                    <ul>
+                        <li>"BBC1-08" is Chapter 1, Position 8.</li>
+                        <li>"BBC4-05b" is Chapter 4, Position 5b, where the lowercase "b" indicates an alternate position described in the text.  After analyzing Position 5, Walter wrote: "Shift White's spares down to the 4, 3, and 2 points and he has to pass."  Both positions 4-05 and 4-5b are included in the deck.</li>
+                        <li>"BBC5-17-A" is Chapter 5, Position 17, where the uppercase "-A" indicates an alternate position not described in the text, but which I thought to be an instructive contrast to the original.</li>
+                        <li>A trailing asterisk (BBC2-25*) indicates the modern rollout result differs from Trice's analysis.  (A <a href='#' onclick="window.open('http://www.fortuitouspress.com/bcerror', '_system', 'location=no')">list of all errors.</a>)</li> 
+                    </ul>
+                    Providing hints for this material is challenging: extensive hints have already been written and collected in book form.  The following notes may help remind you of the topics covered and the insights revealed.
+                </p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Basic Training</legend>
+                    <p>The opening chapters of <em>Backgammon Boot Camp</em> concentrate, naturally, on the most fundamental and foundational concepts in backgammon.  These principles come up in every game.<br><br>
+                    <strong>(Positions 1-1 and 1-2)</strong> “The Trailing team should try to block the leading team and cause as much entanglement and general mayhem as possible.”  Or, per Kit Woolsey: “When ahead in the race, race.  When behind in the race, don't race.”  <br><br>
+                    <strong>(Positions 1-6 to 1-9)</strong> “Hitting two blots is often a very powerful play, even when the double hit compromises the hitter’s position . . . Black may succeed in Closing out White, or White may anchor.  The closeout usually leads to an easy win (Though accidents can still happen); but when White anchors, the game goes on, its character changed drastically.”  <br><br>
+                    <strong>(Positions 1-10 to 1-21)</strong> “If you want to learn to size up a backgammon position at a glance, start by looking at the anchors held by each side.  Ordinarily, the player with the more advanced anchor is winning.”  When might it be right to volunteer a shot?  When opponent is weak but improving, and when your lead is significant.  <br><br>
+                    <strong>(Positions 1-25 to 1-28)</strong> “If a checker must be placed within direct range of a hitter, it gets safer as it moves closer.  Never move into direct range if you can help it, but if you must, then move in as far as you can.”  <br><br>
+                    <strong>(Positions 1-29 to 1-32)</strong> “Paul Magriel gives a list of six criteria for distinguishing the situations when you should be making a bold play from those in which you should prefer a safe play.  They (my paraphrased version) are as follows:<ol>
+                    <li>Opponent board strength.  The more points he has closed, the safer you tend to play.</li>
+                    <li>Got an anchor?  With an anchor you can better handle getting hit, so you can play more boldly.</li>
+                    <li>Your board strength.  With more points, play more boldly.</li>
+                    <li>Blots in opponent’s board.  You don’t mind so much getting hit when there’s something to shoot at from the bar, so you can play more boldly.</li>
+                    <li>Number of men you have back.  The more men you have back the less you mind having an additional man back, so the more boldly you can afford to play.</li>
+                    <li>Number of men your opponent has back.  Similar to (5), when the other player has more men back, you need to play more conservatively.”</li></ol>
+                    </p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Advanced Training</legend>
+                    <p>More general principles in this section, but with an emphasis on strategy over short-term tactics.<br><br>
+                    <strong>(Positions 2-1 to 2-2)</strong> “When the roll you have to play doesn’t lead to an immediate tactical goal, then strategic thinking becomes more important . . . there are really only three ways to win a game of backgammon: race, prime, and attack.  Formulating a game plan means, first of all, ranking these three routes to victory . . .” <br><br>
+                    <strong>(Positions 2-3 to 2-12)</strong> “At the opposite end of the spectrum from burial we find what is known as purity.  A pure play is a play that keeps as many checkers as possible alive and active, either for making key points or for handling difficult rolls without making positional concessions . . . The Pure play is not always the right play.  But it is more likely to be the right play if either side has three or more men back.”  <br><br>
+                    <strong>(Positions 2-13 to 2-16)</strong> “It is as important to win 'won' positions as to get them in the first place.  It is frustrating to close out an opponent and then lose to some random shot in the bearoff.  No one can avoid all such occurances, but a little care and attention to detail will keep them to a minimum.”  <br><br>
+                    <strong>(Positions 2-17 to 2-21)</strong> “Tempo plays are easy to overlook because we tend to focus on constructive possibilities.  But when we have nothing constructive to do and an opponent has a lot of useful numbers coming up, such a play is always worth considering.”  <br><br>
+                    <strong>(Positions 2-22 to 2-31)</strong> “Duplication means giving your opponent two different ways to use the same number, as opposed to giving him different ways to use different numbers.  Duplication is not a tactical principle in its own right, but it is a very useful way to spot plays that limit your opponent’s opportunities on his next roll . . . If it is good to duplicate your opponent’s numbers, then it is (necessarily) bad to duplicate your own.”  
+                    </p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Cubes And Races</legend>
+                    <p>
+                    <strong>(Positions 3-1 to 3-4)</strong> “Equity means the same thing in backgammon as elsewhere: it is the fair value of an asset . . . In a bear-off you can take a double when the odds against you are no worse than 3-to-1.  In other words, you can take when your chance of winning is 25% or greater.”  <br><br>
+                    <strong>(Positions 3-5 to 3-8)</strong> Recube equity can let you take with less than 25%.  <br><br>
+                    <strong>(Positions 3-9 to 3-13)</strong> N-Roll Bearoffs: <table class='tablehintclass table-stripe' cellspacing='5' cellpadding='5' style='border:1px solid black'><tr><th width='50' style='text-align:left'>Rolls</th><th width='60' style='text-align:left'>Win%</th><th style='text-align:left'>Cube Action</th></tr><tr><td>2</td><td>13.9%</td><td>Double - Pass</td></tr><tr><td>3</td><td>21.2%</td><td>Double - Pass</td></tr><tr><td>4</td><td>25.5%</td><td>Double - Take</td></tr><tr><td>5</td><td>28.3%</td><td>Double - Take</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>No Redouble - Take</td></tr></table><br>
+                    Adjust for misses and non-working doubles as necessary.<br><br>
+                    <strong>(Position 3-14)</strong> Pure racing formulas: See the help files in the (free) Race decks.  <br><br>
+                    <strong>(Positions 3-15 to 3-18)</strong> Effective Pip Count (epc) of a “rolls” position is 7n + 1.  So epc of a 3-roll position is 22.<br>
+                    “Point of last take for the trailer is when he is down a number of effective pips equal to the number of rolls to go minus three.”<br>
+                    “Certain oddball racing positions come up regularly in endgames.  For some of these, epcs can be readily estimated:<ol>
+                        <li>Fourteen men off, one checker somewhere outside the home board: Pipcount + 4.7.</li>
+                        <li>Thirteen off, two outside checkers: pipcount + 5.2.</li>
+                        <li>Stack and straggler positions of the sort that result when one player closes out his opponent, gets hit late, and reenters: 3.5x(total checkers) + straggler pipcount."</li>
+                    </ol>
+                    <strong>(Position 3-19)</strong> <a href='#' onclick="window.open('http://www.bkgm.com/articles/CubeHandlingInRaces/', '_system', 'location=no')">A comparison of adjusted pip count methods.</a>  
+
+                    </p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Cubes And Contact</legend>
+                    <p><strong>(Positions 4-1 to 4-4)</strong> “Positions in which one side’s chances in the race are enhanced by the prospect of hitting a blot in the next roll or two.”  <br><br>
+                    <strong>(Positions 4-5 to 4-8)</strong> One checker closed out but some number of men off:
+                    <table class='tablehintclass table-stripe' cellspacing='5' cellpadding='5' style='border:1px solid black'>
+                        <tr><th>Men Off</th><th>Closeout Side</th><th>Men Off Side</th></tr>
+                        <tr><td>Five</td><td>Double</td><td>Pass</td></tr>
+                        <tr><td>Eight</td><td>Even</td><td>Even</td></tr>
+                        <tr><td>Eleven</td><td>Pass</td><td>Double</td></tr>
+                    </table>
+                    <br><br>
+                    <strong>(Positions 4-9 to 4-13)</strong> Two checkers closed out but some number of men off:<br><br>
+                    <table class='tablehintclass table-stripe' cellspacing='5' cellpadding='5' style='border:1px solid black'>
+                        <tr><th>Men Off</th><th>Closeout Side</th><th>Men Off Side</th></tr>
+                        <tr><td>Eleven</td><td>Double</td><td>Pass</td></tr>
+                        <tr><td>Twelve</td><td>Double</td><td>Take</td></tr>
+                        <tr><td>Thirteen</td><td>No Double</td><td>Take</td></tr>
+                    </table>
+                    <br><br>
+
+                    <strong>(Positions 4-14 to 4-17)</strong> Opening 43S, 33p, Fan: Double Take.  Variants.  <br><br>
+                    <strong>(Positions 4-18 to 4-22)</strong> Ace Point games ranging from Too Good to Take.  
+                    </p>
+                </fieldset>
+
+                <fieldset data-role="collapsible"  >
+                    <legend>Backgames</legend>
+                    <p>
+                    <strong>(Positions 5-1 to 5-6)</strong> Backgame characteristics and timing.  <br><br>
+                    <strong>(Positions 5-7 to 5-12)</strong> Backgame tactics: play pure for long-term advantage.  <br><br>
+                    <strong>(Positions 5-13 to 5-16)</strong> Backgame bearin: Killing numbers, early blot plays, and clearing the hardest points.  <br><br>
+                    <strong>(Positions 5-17 to 5-21)</strong> Forward or backward?  Deciding on the appropriate game plan.  <br><br>
+                    <strong>(Positions 5-22 to 5-41)</strong> “Well-timed well-structured backgames are, typically, still takes when the opponent has three points left to clear in front of the more advanced anchor.”  <br><br>
+                    <strong>(Positions 5-42 to 5-46)</strong> “The classic novice mistake in backgame cube action is to get a simple double direct shot and instantly turn the cube, naively assuming that “favorite to hit” means “favorite to win,” and forgetting about gammons altogether.”  <br><br>
+                    <strong>(Positions 5-47 to 5-51)</strong> Backgame tactics; play pure for long-term advantage.  
+
+                    </p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Primes</legend>
+                    <p>
+                    <strong>(Positions 6-1 to 6-11)</strong> “When both sides have primes, the prime that lasts longer is best.  The more similar the positions are for the two sides, the more important it is to be behind in the pipcount.”  Being on the roof can help your prime last longer.  <br><br>
+                    <strong>(Positions 6-12 to 6-16)</strong> Killed numbers and the placement of spares impact how long a prime will likely last.  <br><br>
+                    <strong>(Positions 6-17 to 6-26)</strong> Prime or anchor?  Deciding on appropriate game plan.  
+                    </p>
+                </fieldset>
+
+                <fieldset data-role="collapsible"  >
+                    <legend>Attacking Play</legend>
+                    <p>
+                    “Very often, the result of an attack is a gammon win for the attacker.  That is one of the reason why attacking pays: the points tend to come four at a time.”<br><br>
+                    <strong>(Positions 7-1 to 7-5)</strong> The more likely an attack is to succeed, the less you should be concerned with defense.  <br><br>
+                    <strong>(Positions 7-6 to 7-2)</strong> “Factors that contribute to the strength of an attack:
+                        <ol>
+                            <li>Race lead</li>
+                            <li>Degree to which the back men have escaped</li>
+                            <li>Chances to hit additional blots</li>
+                            <li>Points made in and near the home board</li>
+                            <li>Checkers available for making home-board points</li>
+                            <li>Defender’s checkers on the bar</li>
+                            <li>Defender’s lack of an anchor"</li>
+                        </ol>
+                        “Defensive strengths:
+                        <ol>
+                            <li>A prime blocking some of the attacker’s checkers</li>
+                            <li>Home-board points</li>
+                            <li>Outfield points</li>
+                            <li>Flexibility; good distribution</li>
+                            <li>An anchor, or prospects for anchoring"</li>
+                        </ol>
+                        <strong>(Positions 7-23 to 7-27)</strong> “In general, the order of priority seems to be as follows:
+                        <ol>
+                            <li>Making home-board points</li>
+                            <li>Hitting blots</li>
+                            <li>Getting the stragglers home</li>
+                        </ol>
+                        But there are many exceptions  . . . "  
+
+                    </p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Match Play</legend>
+                    <p>
+                    <strong>(Positions 8-1 to 8-3)</strong> “If you are the Post-Crawford leader and you are doubled from any odd score you have a free drop.  This means that conceding a single point gives up almost nothing in match-winning chances.  But when you are doubled from an even score you have a mandatory take.  <br><br>
+
+                    <strong>(Positions 8-4 to 8-5)</strong> The Mysterious 2-Point Match: “It turns out that it rarely hurts to double when your opponent can still take.  If both players understand this, then a 2-point match always turns into a 1-point match.”  <br><br>
+
+                    <strong>(Positions 8-6 to 8-8)</strong> Racing Cubes in the 3-Point Match:
+                    <table class='tablehintclass table-stripe' cellspacing='5' cellpadding='5' style='border:1px solid black'>
+                    <tr><th>Doubler Needs</th><th>Taker Needs</th><th>TP (Live)</th><th>TP (Dead)</th></tr>
+                    <tr><td>2</td><td>3</td><td>25%</td><td>36%</td></tr>
+                    <tr><td>3</td><td>3</td><td>28%</td><td>28%</td></tr>  
+                    <tr><td>3</td><td>3</td><td>23%</td><td>30%</td></tr>
+                    </table>
+                    <br><br>
+
+                    <strong>(Positions 8-9 to 8-12)</strong> Gammons And The 3-Point Match: “If a sufficient proportion of your wins are going to be gammons, and if a gammon wins the match, then there is no reason to double, no matter how likely you are to win in the first place.”    <br><br>
+
+                    <strong>(Positions 8-13 to 8-15)</strong> Four Points To Go:<br><br>
+                    <table class='tablehintclass table-stripe' cellspacing='5' cellpadding='5' style='border:1px solid black'>
+                    <tr><th>Doubler Needs</th><th>Taker Needs</th><th>TP (Live)</th><th>TP (Dead)</th></tr>
+                    <tr><td>4</td><td>2</td><td>20%</td><td>20%</td></tr>
+                    <tr><td>2</td><td>4</td><td>19%</td><td>37%</td></tr>  
+                    <tr><td>3</td><td>4</td><td>21%</td><td>34%</td></tr>
+                    <tr><td>4</td><td>3</td><td>20%</td><td>24%</td></tr>  
+                    <tr><td>4</td><td>4</td><td>20%</td><td>29%</td></tr>
+                    </table>
+                    <br><br>
+
+                    <strong>(Positions 8-16 to 8-19)</strong> How To Win Four Points: “It is no secret that you can win four points in a single game of a backgammon Match.  Nonetheless, many players seem to forget this at key moments in their matches!  The procedure has two parts: first you double, then you win a gammon.  Both steps are essential and they must be carried out in the right order.”  
+
+
+                    </p>
+                </fieldset>
+
+                </div>
+                <br><br>   
+            </div><!-- /content -->
+        </div><!-- page -->
+
+    <div data-role="page" id="hint31" data-title="Hint: Encyclopedia" data-theme="a">
+
+            <div class="whitebar"></div>
+            <div class="redbar"></div>
+            <div class="whitebar"></div>
+            <br>
+
+            <div class="ui-content willScroll AboutContent">
+                <div data-role="collapsible-set" data-corners="false" >
+                <fieldset data-role="collapsible"  >
+                    <legend>About Encyclopedia</legend>
+                    <p>Kit Woolsey's <em>Backgammon Encyclopedia</em> <b>did not</b> began as a series of online columns for GammonVillage, later to become argueably the most highly-regarded and best-selling backgammon book of its time.  Each short chapter introduces a concept such that a beginner can follow, but then develops that concept over five or so pages to places unfamiliar to many experts.  In this way, the book is accessable and informative to everyone.  (The dry humor and graceful clarity of the prose also help.)<br><br>
+                    These decks include every position from Backgammon Boot Camp and more.  Find the position name at the bottom of the exposed answer text.
+                    <ul>
+                        <li>"BBC1-08" is Chapter 1, Position 8.</li>
+                        <li>"BBC4-05b" is Chapter 4, Position 5b, where the lowercase "b" indicates an alternate position described in the text.  After analyzing Position 5, Walter wrote: "Shift White's spares down to the 4, 3, and 2 points and he has to pass."  Both positions 4-05 and 4-5b are included in the deck.</li>
+                        <li>"BBC5-17-A" is Chapter 5, Position 17, where the uppercase "-A" indicates an alternate position not described in the text, but which I thought to be an instructive contrast to the original.</li>
+                        <li>A trailing asterisk (BBC2-25*) indicates the modern rollout result differs from Trice's analysis.  (A <a href='#' onclick="window.open('http://www.fortuitouspress.com/bcerror', '_system', 'location=no')">list of all errors.</a>)</li> 
+                    </ul>
+                    Providing hints for this material is challenging: extensive hints have already been written and collected in book form.  The following notes may help remind you of the topics covered and the insights revealed.
+                </p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Blitz</legend>
+                    <p>The opening chapters of <em>Backgammon Boot Camp</em> concentrate, naturally, on the most fundamental and foundational concepts in backgammon.  These principles come up in every game.<br><br>
+                    <strong>(Positions 1-1 and 1-2)</strong> “The Trailing team should try to block the leading team and cause as much entanglement and general mayhem as possible.”  Or, per Kit Woolsey: “When ahead in the race, race.  When behind in the race, don't race.”  <br><br>
+                    <strong>(Positions 1-6 to 1-9)</strong> “Hitting two blots is often a very powerful play, even when the double hit compromises the hitter’s position . . . Black may succeed in Closing out White, or White may anchor.  The closeout usually leads to an easy win (Though accidents can still happen); but when White anchors, the game goes on, its character changed drastically.”  <br><br>
+                    <strong>(Positions 1-10 to 1-21)</strong> “If you want to learn to size up a backgammon position at a glance, start by looking at the anchors held by each side.  Ordinarily, the player with the more advanced anchor is winning.”  When might it be right to volunteer a shot?  When opponent is weak but improving, and when your lead is significant.  <br><br>
+                    <strong>(Positions 1-25 to 1-28)</strong> “If a checker must be placed within direct range of a hitter, it gets safer as it moves closer.  Never move into direct range if you can help it, but if you must, then move in as far as you can.”  <br><br>
+                    <strong>(Positions 1-29 to 1-32)</strong> “Paul Magriel gives a list of six criteria for distinguishing the situations when you should be making a bold play from those in which you should prefer a safe play.  They (my paraphrased version) are as follows:<ol>
+                    <li>Opponent board strength.  The more points he has closed, the safer you tend to play.</li>
+                    <li>Got an anchor?  With an anchor you can better handle getting hit, so you can play more boldly.</li>
+                    <li>Your board strength.  With more points, play more boldly.</li>
+                    <li>Blots in opponent’s board.  You don’t mind so much getting hit when there’s something to shoot at from the bar, so you can play more boldly.</li>
+                    <li>Number of men you have back.  The more men you have back the less you mind having an additional man back, so the more boldly you can afford to play.</li>
+                    <li>Number of men your opponent has back.  Similar to (5), when the other player has more men back, you need to play more conservatively.”</li></ol>
+                    </p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Holding Games</legend>
+                    <p>More general principles in this section, but with an emphasis on strategy over short-term tactics.<br><br>
+                    <strong>(Positions 2-1 to 2-2)</strong> “When the roll you have to play doesn’t lead to an immediate tactical goal, then strategic thinking becomes more important . . . there are really only three ways to win a game of backgammon: race, prime, and attack.  Formulating a game plan means, first of all, ranking these three routes to victory . . .” <br><br>
+                    <strong>(Positions 2-3 to 2-12)</strong> “At the opposite end of the spectrum from burial we find what is known as purity.  A pure play is a play that keeps as many checkers as possible alive and active, either for making key points or for handling difficult rolls without making positional concessions . . . The Pure play is not always the right play.  But it is more likely to be the right play if either side has three or more men back.”  <br><br>
+                    <strong>(Positions 2-13 to 2-16)</strong> “It is as important to win 'won' positions as to get them in the first place.  It is frustrating to close out an opponent and then lose to some random shot in the bearoff.  No one can avoid all such occurances, but a little care and attention to detail will keep them to a minimum.”  <br><br>
+                    <strong>(Positions 2-17 to 2-21)</strong> “Tempo plays are easy to overlook because we tend to focus on constructive possibilities.  But when we have nothing constructive to do and an opponent has a lot of useful numbers coming up, such a play is always worth considering.”  <br><br>
+                    <strong>(Positions 2-22 to 2-31)</strong> “Duplication means giving your opponent two different ways to use the same number, as opposed to giving him different ways to use different numbers.  Duplication is not a tactical principle in its own right, but it is a very useful way to spot plays that limit your opponent’s opportunities on his next roll . . . If it is good to duplicate your opponent’s numbers, then it is (necessarily) bad to duplicate your own.”  
+                    </p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Anchor Games</legend>
+                    <p>
+                    <strong>(Positions 3-1 to 3-4)</strong> “Equity means the same thing in backgammon as elsewhere: it is the fair value of an asset . . . In a bear-off you can take a double when the odds against you are no worse than 3-to-1.  In other words, you can take when your chance of winning is 25% or greater.”  <br><br>
+                    <strong>(Positions 3-5 to 3-8)</strong> Recube equity can let you take with less than 25%.  <br><br>
+                    <strong>(Positions 3-9 to 3-13)</strong> N-Roll Bearoffs: <table class='tablehintclass table-stripe' cellspacing='5' cellpadding='5' style='border:1px solid black'><tr><th width='50' style='text-align:left'>Rolls</th><th width='60' style='text-align:left'>Win%</th><th style='text-align:left'>Cube Action</th></tr><tr><td>2</td><td>13.9%</td><td>Double - Pass</td></tr><tr><td>3</td><td>21.2%</td><td>Double - Pass</td></tr><tr><td>4</td><td>25.5%</td><td>Double - Take</td></tr><tr><td>5</td><td>28.3%</td><td>Double - Take</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>No Redouble - Take</td></tr></table><br>
+                    Adjust for misses and non-working doubles as necessary.<br><br>
+                    <strong>(Position 3-14)</strong> Pure racing formulas: See the help files in the (free) Race decks.  <br><br>
+                    <strong>(Positions 3-15 to 3-18)</strong> Effective Pip Count (epc) of a “rolls” position is 7n + 1.  So epc of a 3-roll position is 22.<br>
+                    “Point of last take for the trailer is when he is down a number of effective pips equal to the number of rolls to go minus three.”<br>
+                    “Certain oddball racing positions come up regularly in endgames.  For some of these, epcs can be readily estimated:<ol>
+                        <li>Fourteen men off, one checker somewhere outside the home board: Pipcount + 4.7.</li>
+                        <li>Thirteen off, two outside checkers: pipcount + 5.2.</li>
+                        <li>Stack and straggler positions of the sort that result when one player closes out his opponent, gets hit late, and reenters: 3.5x(total checkers) + straggler pipcount."</li>
+                    </ol>
+                    <strong>(Position 3-19)</strong> <a href='#' onclick="window.open('http://www.bkgm.com/articles/CubeHandlingInRaces/', '_system', 'location=no')">A comparison of adjusted pip count methods.</a>  
+
+                    </p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Priming Games</legend>
+                    <p><strong>(Positions 4-1 to 4-4)</strong> “Positions in which one side’s chances in the race are enhanced by the prospect of hitting a blot in the next roll or two.”  <br><br>
+                    <strong>(Positions 4-5 to 4-8)</strong> One checker closed out but some number of men off:
+                    <table class='tablehintclass table-stripe' cellspacing='5' cellpadding='5' style='border:1px solid black'>
+                        <tr><th>Men Off</th><th>Closeout Side</th><th>Men Off Side</th></tr>
+                        <tr><td>Five</td><td>Double</td><td>Pass</td></tr>
+                        <tr><td>Eight</td><td>Even</td><td>Even</td></tr>
+                        <tr><td>Eleven</td><td>Pass</td><td>Double</td></tr>
+                    </table>
+                    <br><br>
+                    <strong>(Positions 4-9 to 4-13)</strong> Two checkers closed out but some number of men off:<br><br>
+                    <table class='tablehintclass table-stripe' cellspacing='5' cellpadding='5' style='border:1px solid black'>
+                        <tr><th>Men Off</th><th>Closeout Side</th><th>Men Off Side</th></tr>
+                        <tr><td>Eleven</td><td>Double</td><td>Pass</td></tr>
+                        <tr><td>Twelve</td><td>Double</td><td>Take</td></tr>
+                        <tr><td>Thirteen</td><td>No Double</td><td>Take</td></tr>
+                    </table>
+                    <br><br>
+
+                    <strong>(Positions 4-14 to 4-17)</strong> Opening 43S, 33p, Fan: Double Take.  Variants.  <br><br>
+                    <strong>(Positions 4-18 to 4-22)</strong> Ace Point games ranging from Too Good to Take.  
+                    </p>
+                </fieldset>
+
+                <fieldset data-role="collapsible"  >
+                    <legend>Back Games</legend>
+                    <p>
+                    <strong>(Positions 5-1 to 5-6)</strong> Backgame characteristics and timing.  <br><br>
+                    <strong>(Positions 5-7 to 5-12)</strong> Backgame tactics: play pure for long-term advantage.  <br><br>
+                    <strong>(Positions 5-13 to 5-16)</strong> Backgame bearin: Killing numbers, early blot plays, and clearing the hardest points.  <br><br>
+                    <strong>(Positions 5-17 to 5-21)</strong> Forward or backward?  Deciding on the appropriate game plan.  <br><br>
+                    <strong>(Positions 5-22 to 5-41)</strong> “Well-timed well-structured backgames are, typically, still takes when the opponent has three points left to clear in front of the more advanced anchor.”  <br><br>
+                    <strong>(Positions 5-42 to 5-46)</strong> “The classic novice mistake in backgame cube action is to get a simple double direct shot and instantly turn the cube, naively assuming that “favorite to hit” means “favorite to win,” and forgetting about gammons altogether.”  <br><br>
+                    <strong>(Positions 5-47 to 5-51)</strong> Backgame tactics; play pure for long-term advantage.  
+
+                    </p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>One Checker Up</legend>
+                    <p>
+                    <strong>(Positions 6-1 to 6-11)</strong> “When both sides have primes, the prime that lasts longer is best.  The more similar the positions are for the two sides, the more important it is to be behind in the pipcount.”  Being on the roof can help your prime last longer.  <br><br>
+                    <strong>(Positions 6-12 to 6-16)</strong> Killed numbers and the placement of spares impact how long a prime will likely last.  <br><br>
+                    <strong>(Positions 6-17 to 6-26)</strong> Prime or anchor?  Deciding on appropriate game plan.  
+                    </p>
+                </fieldset>
+
+                <fieldset data-role="collapsible"  >
+                    <legend>Containment</legend>
+                    <p>
+                    “Very often, the result of an attack is a gammon win for the attacker.  That is one of the reason why attacking pays: the points tend to come four at a time.”<br><br>
+                    <strong>(Positions 7-1 to 7-5)</strong> The more likely an attack is to succeed, the less you should be concerned with defense.  <br><br>
+                    <strong>(Positions 7-6 to 7-2)</strong> “Factors that contribute to the strength of an attack:
+                        <ol>
+                            <li>Race lead</li>
+                            <li>Degree to which the back men have escaped</li>
+                            <li>Chances to hit additional blots</li>
+                            <li>Points made in and near the home board</li>
+                            <li>Checkers available for making home-board points</li>
+                            <li>Defender’s checkers on the bar</li>
+                            <li>Defender’s lack of an anchor"</li>
+                        </ol>
+                        “Defensive strengths:
+                        <ol>
+                            <li>A prime blocking some of the attacker’s checkers</li>
+                            <li>Home-board points</li>
+                            <li>Outfield points</li>
+                            <li>Flexibility; good distribution</li>
+                            <li>An anchor, or prospects for anchoring"</li>
+                        </ol>
+                        <strong>(Positions 7-23 to 7-27)</strong> “In general, the order of priority seems to be as follows:
+                        <ol>
+                            <li>Making home-board points</li>
+                            <li>Hitting blots</li>
+                            <li>Getting the stragglers home</li>
+                        </ol>
+                        But there are many exceptions  . . . "  
+
+                    </p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Post-Ace-Point Games</legend>
+                    <p>
+                    <strong>(Positions 8-1 to 8-3)</strong> “If you are the Post-Crawford leader and you are doubled from any odd score you have a free drop.  This means that conceding a single point gives up almost nothing in match-winning chances.  But when you are doubled from an even score you have a mandatory take.  <br><br>
+
+                    <strong>(Positions 8-4 to 8-5)</strong> The Mysterious 2-Point Match: “It turns out that it rarely hurts to double when your opponent can still take.  If both players understand this, then a 2-point match always turns into a 1-point match.”  <br><br>
+
+                    <strong>(Positions 8-6 to 8-8)</strong> Racing Cubes in the 3-Point Match:
+                    <table class='tablehintclass table-stripe' cellspacing='5' cellpadding='5' style='border:1px solid black'>
+                    <tr><th>Doubler Needs</th><th>Taker Needs</th><th>TP (Live)</th><th>TP (Dead)</th></tr>
+                    <tr><td>2</td><td>3</td><td>25%</td><td>36%</td></tr>
+                    <tr><td>3</td><td>3</td><td>28%</td><td>28%</td></tr>  
+                    <tr><td>3</td><td>3</td><td>23%</td><td>30%</td></tr>
+                    </table>
+                    <br><br>
+
+                    <strong>(Positions 8-9 to 8-12)</strong> Gammons And The 3-Point Match: “If a sufficient proportion of your wins are going to be gammons, and if a gammon wins the match, then there is no reason to double, no matter how likely you are to win in the first place.”    <br><br>
+
+                    <strong>(Positions 8-13 to 8-15)</strong> Four Points To Go:<br><br>
+                    <table class='tablehintclass table-stripe' cellspacing='5' cellpadding='5' style='border:1px solid black'>
+                    <tr><th>Doubler Needs</th><th>Taker Needs</th><th>TP (Live)</th><th>TP (Dead)</th></tr>
+                    <tr><td>4</td><td>2</td><td>20%</td><td>20%</td></tr>
+                    <tr><td>2</td><td>4</td><td>19%</td><td>37%</td></tr>  
+                    <tr><td>3</td><td>4</td><td>21%</td><td>34%</td></tr>
+                    <tr><td>4</td><td>3</td><td>20%</td><td>24%</td></tr>  
+                    <tr><td>4</td><td>4</td><td>20%</td><td>29%</td></tr>
+                    </table>
+                    <br><br>
+
+                    <strong>(Positions 8-16 to 8-19)</strong> How To Win Four Points: “It is no secret that you can win four points in a single game of a backgammon Match.  Nonetheless, many players seem to forget this at key moments in their matches!  The procedure has two parts: first you double, then you win a gammon.  Both steps are essential and they must be carried out in the right order.”  
+
+
+                    </p>
+                </fieldset>
+                <fieldset data-role="collapsible"  >
+                    <legend>Races</legend>
+                    <p>
+                    <strong>(Positions 8-1 to 8-3)</strong> “If you are the Post-Crawford leader and you are doubled from any odd score you have a free drop.  This means that conceding a single point gives up almost nothing in match-winning chances.  But when you are doubled from an even score you have a mandatory take.  <br><br>
+
+                    <strong>(Positions 8-4 to 8-5)</strong> The Mysterious 2-Point Match: “It turns out that it rarely hurts to double when your opponent can still take.  If both players understand this, then a 2-point match always turns into a 1-point match.”  <br><br>
+
+                    <strong>(Positions 8-6 to 8-8)</strong> Racing Cubes in the 3-Point Match:
+                    <table class='tablehintclass table-stripe' cellspacing='5' cellpadding='5' style='border:1px solid black'>
+                    <tr><th>Doubler Needs</th><th>Taker Needs</th><th>TP (Live)</th><th>TP (Dead)</th></tr>
+                    <tr><td>2</td><td>3</td><td>25%</td><td>36%</td></tr>
+                    <tr><td>3</td><td>3</td><td>28%</td><td>28%</td></tr>  
+                    <tr><td>3</td><td>3</td><td>23%</td><td>30%</td></tr>
+                    </table>
+                    <br><br>
+
+                    <strong>(Positions 8-9 to 8-12)</strong> Gammons And The 3-Point Match: “If a sufficient proportion of your wins are going to be gammons, and if a gammon wins the match, then there is no reason to double, no matter how likely you are to win in the first place.”    <br><br>
+
+                    <strong>(Positions 8-13 to 8-15)</strong> Four Points To Go:<br><br>
+                    <table class='tablehintclass table-stripe' cellspacing='5' cellpadding='5' style='border:1px solid black'>
+                    <tr><th>Doubler Needs</th><th>Taker Needs</th><th>TP (Live)</th><th>TP (Dead)</th></tr>
+                    <tr><td>4</td><td>2</td><td>20%</td><td>20%</td></tr>
+                    <tr><td>2</td><td>4</td><td>19%</td><td>37%</td></tr>  
+                    <tr><td>3</td><td>4</td><td>21%</td><td>34%</td></tr>
+                    <tr><td>4</td><td>3</td><td>20%</td><td>24%</td></tr>  
+                    <tr><td>4</td><td>4</td><td>20%</td><td>29%</td></tr>
+                    </table>
+                    <br><br>
+
+                    <strong>(Positions 8-16 to 8-19)</strong> How To Win Four Points: “It is no secret that you can win four points in a single game of a backgammon Match.  Nonetheless, many players seem to forget this at key moments in their matches!  The procedure has two parts: first you double, then you win a gammon.  Both steps are essential and they must be carried out in the right order.”  
+
+                    </p>
+                </fieldset>                </div>
+                <br><br>   
+            </div><!-- /content -->
+        </div><!-- page -->
+
+        <script type="text/javascript" src="js/bgLog/bglogCore-1604B-FB-svg.min.js"></script>
+
+	</body>
+</html>

@@ -1,0 +1,183 @@
+.centeredtext {
+	text-align:center;
+	margin: 10px;
+	white-space:normal !important;
+}
+.lefttext {
+	text-align:left;
+	white-space:normal !important;
+}
+.whitebar {
+	background-color: #FFF;
+	margin: 0px;
+	padding: 0px;
+	float: none;
+	height: 1px;
+	width: 100%;
+}
+.redbar {
+	background-color: #c1272d;
+	margin: 0px;
+	padding: 0px;
+	float: none;
+	height: 5px;
+	width: 100%;
+}
+
+.blackbar {
+	background-color: #000000;
+	margin: 0px;
+	padding: 0px;
+	float: none;
+	height: 5px;
+	width: 100%;
+}
+
+.metaButton {
+	border-style: none;
+}
+
+.navFootBtn {
+/*	font-size: 140%;*/
+	font-style: italic;
+}
+
+#About {
+/*	background-color: #FFFFF0;*/
+	background-image: url("../images/icon.png");
+    background-repeat: no-repeat;
+    background-position: 90% 85px;
+/*	margin: 0px;*/
+	/*padding: 15px;*/
+	/*min-height: 100%;*/
+}
+
+.AboutContent, #InitialFC, #InitialDS {
+	padding: 15px;
+}
+
+.DSContent {
+	padding: 4px;
+}
+
+#swapButton {
+	float: left;
+	margin-left: 10px;
+	margin-top: 0px;
+}
+#hintButton {
+	float: right;
+	margin-top: 0px;
+}
+.movebutton {
+	text-decoration: none;
+}
+
+.outcomedist {
+	display: none;
+/*	font-style: italic;  */
+	font-size: 90%;
+	padding-bottom:10px;
+}
+
+.favMessage {
+	display: none;
+}
+
+.button-wrap {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+th.tablehintclass {
+	text-align:left !important;
+}
+
+#flashcards {
+/*	height: 10px;  */
+	overflow: hidden !important;
+}
+
+/* iscrollview */
+#outerAnswerContainer div.iscroll-scroller {
+    width: 100% !important;
+    padding: 5px;
+}
+
+/* bglog stuff */
+#bglogContainer {
+	text-align: center;
+	position: relative; 
+	height: 0; 
+	width: 100%; 
+	padding: 0;
+	padding-bottom: 75%; 
+}
+
+.ui-btn:visited {
+	text-decoration: none !important;
+}
+.ui-content {
+	padding: 0px;
+	margin: 0px;
+	overflow: hidden; /* stops chrome scrollbar flashing, otherwise not reuired */
+}
+
+.button-span {
+    position: absolute;
+    right: 0;
+    margin-top: -5px !important;
+    margin-right: 10px
+}
+
+.split-button-custom {
+    float: right;
+    margin-right: 10px;
+    margin-top: -32px;
+    border-bottom-left-radius: 1em 1em;
+    border-bottom-right-radius: 1em 1em;
+    border-top-left-radius: 1em 1em;
+    border-top-right-radius: 1em 1em;   
+}
+
+.split-button-custom span.ui-btn-inner {
+    border-bottom-left-radius: 1em 1em;
+    border-bottom-right-radius: 1em 1em;
+    border-top-left-radius: 1em 1em;
+    border-top-right-radius: 1em 1em;
+    padding-right: 0px;
+}
+
+.split-button-custom span.ui-icon {
+    margin-top: 0px;
+    right: 0px;
+    top: 0px;
+    position: relative;
+}
+
+.ui-header .ui-title {
+    margin-right: 10%;
+    margin-left: 10%;
+}
+
+label > * {
+	display: block; 
+	pointer-events: none; 
+}
+
+/*#btnSettings{
+    background-color: transparent;
+    border: 0;
+}*/
+/*#browseStart:after, #trainStart:after {
+    height: 16px;
+    width: 16px;
+    background-size: 12px 12px;
+    margin-left: -6px;
+    margin-top: -6px;
+}*/
+/*#selectDeckForm, #settingsForm {
+	padding: 15px;*/ /* replaces the missing ui.content padding */
+/*}*/
+/* end bglog stuff */

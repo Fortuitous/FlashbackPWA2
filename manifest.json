@@ -1,0 +1,23 @@
+{
+  "short_name": "Flashback",
+  "name": "Flashback",
+  "start_url": "/Flashback/index.html",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/images/xxhdpi.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },    
+    {
+      "src": "/images/icon-1024.png",
+      "type": "image/png",
+      "sizes": "1024x1024"
+    }
+  ],
+  "orientation": "landscape",
+  "description": "Backgammon flashcards",
+  "background_color": "#3367D6",
+  "theme_color": "#3367D6"
+  "scope": "/",
+}
