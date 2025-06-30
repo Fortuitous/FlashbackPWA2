@@ -7,7 +7,7 @@ $(document).ready(function() {
     $('#statsCompareNavbar').hide()    
     $('#browseNavbar').hide()    
 
-    window.isphone = false;
+/*    window.isphone = false;
     var ua = navigator.userAgent.toLowerCase();
     window.isphone = ua.indexOf("mobile") > -1 || ua.indexOf("android") > -1;
 
@@ -15,7 +15,9 @@ $(document).ready(function() {
         document.addEventListener("deviceready", onDeviceReady, false);
     } else {
         onDeviceReady();
-    }
+    }*/
+
+    onDeviceReady();
 });
 
 function onDeviceReady() {
