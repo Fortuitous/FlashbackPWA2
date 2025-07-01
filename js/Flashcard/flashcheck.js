@@ -16,7 +16,7 @@ $(document).ready(function() {
     } else {
         onDeviceReady();
     }*/
-
+    window.isphone = true
     onDeviceReady();
 });
 
