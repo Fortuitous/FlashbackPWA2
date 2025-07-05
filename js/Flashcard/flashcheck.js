@@ -315,11 +315,11 @@ function onDeviceReady() {
         //editMode = false;
 		//bglogInitFlag = false;
 
-        if (window.isphone){
+/*        if (window.isphone){
             setTimeout(function () {
                 navigator.splashscreen.hide();
             }, 0);
-        }
+        }*/
 
 
         loadSettings(); // if ls.Value, fbValue = ls.value
