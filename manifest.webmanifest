@@ -8,6 +8,40 @@
 	"orientation": "portrait",
 	"scope": "/",
 	"start_url": "./",
+	"screenshots": [
+        {
+            "src": "images/purple1.jpg",
+            "type": "image/jpg",
+            "sizes": "1080x2400"
+        },
+        {
+            "src": "images/purple2.jpg",
+            "type": "image/jpg",
+            "sizes": "1080x2400"
+        },
+        {
+            "src": "images/green1.jpg",
+            "type": "image/jpg",
+            "sizes": "1080x2400"
+        },
+        {
+            "src": "images/green2.jpg",
+            "type": "image/jpg",
+            "sizes": "1080x2400"
+        },
+        {
+            "src": "images/wide1.jpg",
+            "type": "image/jpg",
+            "sizes": "2560x1440",
+            "form_factor": "wide"
+        },
+        {
+            "src": "images/wide2.jpg",
+            "type": "image/jpg",
+            "sizes": "2560x1440",
+            "form_factor": "wide"
+        }                
+    ],
 	"icons": [
 		{
 			"src": "icons/16x16.png",
