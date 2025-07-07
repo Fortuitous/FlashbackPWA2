@@ -636,7 +636,7 @@ function onDeviceReady() {
 		if (storageAvailable('localStorage')) {
 			fbCoach = (localStorage.fbCoach === undefined) ? fbCoach = "True" : fbCoach = localStorage.fbCoach;
 			fbTheme = (localStorage.fbTheme === undefined) ? fbTheme = "theme1" : fbTheme = localStorage.fbTheme;
-            fbUITheme = (localStorage.fbUITheme === undefined) ? fbUITheme = "true" : fbUITheme = localStorage.fbUITheme;            
+            fbUITheme = (localStorage.fbUITheme === undefined) ? fbUITheme = "false" : fbUITheme = localStorage.fbUITheme;            
 			fbAnimation = (localStorage.fbAnimation === undefined) ? fbAnimation = .75 : fbAnimation = Number(localStorage.fbAnimation);
 			fbDirection = (localStorage.fbDirection === undefined) ? fbDirection = "true" : fbDirection = localStorage.fbDirection;
             fbShowDice = (localStorage.fbShowDice === undefined) ? fbShowDice = "true" : fbShowDice = localStorage.fbShowDice;
