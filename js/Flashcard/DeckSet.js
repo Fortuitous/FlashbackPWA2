@@ -13,4 +13,4 @@ DeckSet[4] = new makeDeckSet("Opening Replies", 0);
 DeckSet[5] = new makeDeckSet("Boot Camp", 0);
 DeckSet[6] = new makeDeckSet("Races", 0);
 DeckSet[7] = new makeDeckSet("Favorites", 0);
-DeckSet[8] = new makeDeckSet("Encyclopedia", 0);
+DeckSet[8] = new makeDeckSet("Encyclopedia Vol 1", 0);

@@ -67,7 +67,7 @@ function onDeviceReady() {
     var fbShowDeckName = true;
     var fbShowDice = true;
     var fbDirection = true;
-    var fbUITheme = true;
+    var fbUITheme = false;
     var fbAnimation = .5;
     var fbShowTakiPoints = true
     var comapreFlag = false
