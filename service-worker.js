@@ -14,7 +14,7 @@
 // Names of the two caches used in this version of the service worker.
 // Change to v2, etc. when you update any of the local resources, which will
 // in turn trigger the install event again.
-const PRECACHE = 'precache-v11';
+const PRECACHE = 'precache-v12';
 console.log({PRECACHE});
 const RUNTIME = 'runtime';
 
@@ -66,7 +66,7 @@ const PRECACHE_URLS = [
   ];
 
 // The install handler takes care of precaching the resources we always need.
-self.addEventListener('install', event => {
+/*self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(PRECACHE)
       .then(cache => cache.addAll(PRECACHE_URLS))
@@ -114,4 +114,4 @@ self.addEventListener('fetch', event => {
       })
     );
   }
-});
+});*/
