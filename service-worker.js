@@ -14,7 +14,7 @@
 // Names of the two caches used in this version of the service worker.
 // Change to v2, etc. when you update any of the local resources, which will
 // in turn trigger the install event again.
-const PRECACHE = 'precache-v10';
+const PRECACHE = 'precache-v11';
 console.log({PRECACHE});
 const RUNTIME = 'runtime';
 
@@ -77,10 +77,13 @@ self.addEventListener('install', event => {
 // The activate handler takes care of cleaning up old caches.
 self.addEventListener('activate', event => {
   const currentCaches = [PRECACHE, RUNTIME];
+  colsole.log({currentCaches})
   event.waitUntil(
     caches.keys().then(cacheNames => {
+      console.log({cacheNames})
       return cacheNames.filter(cacheName => !currentCaches.includes(cacheName));
     }).then(cachesToDelete => {
+      console.log({cachesToDelete})
       return Promise.all(cachesToDelete.map(cacheToDelete => {
         return caches.delete(cacheToDelete);
       }));
