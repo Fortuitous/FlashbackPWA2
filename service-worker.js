@@ -77,7 +77,7 @@ self.addEventListener('install', event => {
 // The activate handler takes care of cleaning up old caches.
 self.addEventListener('activate', event => {
   const currentCaches = [PRECACHE, RUNTIME];
-  colsole.log({currentCaches})
+  console.log({currentCaches})
   event.waitUntil(
     caches.keys().then(cacheNames => {
       console.log({cacheNames})
