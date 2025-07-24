@@ -1,4 +1,4 @@
-var cacheName = 'v13';
+const CACHENAME = 'v14';
 
 const PRECACHE_URLS = [
         './index.html',
@@ -48,7 +48,7 @@ const PRECACHE_URLS = [
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(cacheName)
+    caches.open(CACHENAME)
       .then(cache => cache.addAll(PRECACHE_URLS))
   );
 });
@@ -68,5 +68,20 @@ self.addEventListener('fetch', function (event) {
         }
         return fetch(event.request);
       })
+  );
+});
+
+// The activate handler takes care of cleaning up old caches.
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      console.log({cacheNames})
+      return cacheNames.filter(cacheName => CACHENAME != cacheName);
+    }).then(cachesToDelete => {
+      console.log({cachesToDelete})
+      return Promise.all(cachesToDelete.map(cacheToDelete => {
+        return caches.delete(cacheToDelete);
+      }));
+    }).then(() => self.clients.claim())
   );
 });
