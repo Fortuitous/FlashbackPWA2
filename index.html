@@ -26,7 +26,7 @@
               visibility: hidden;
               min-width: 250px;
               margin-left: -125px;
-              background-color: #333;
+              background-color: red;
               color: #fff;
               text-align: center;
               border-radius: 2px;
@@ -137,7 +137,7 @@
    	</head>
     <body>
 
-                    <div id="snackbar">A new version of this app is available. Click <a id="reloadJB">here</a> to update.</div>        
+        <div id="snackbar">A new version of this app is available. Click to update.</div>        
 
 <!-- External Toolbars -->
 <!-- <div id='favButton' class='ui-btn ui-icon-plus ui-btn-icon-notext ui-corner-all'> -->
@@ -544,7 +544,7 @@
             
                 <h1 style="font-family:Tahoma; font-size: 40px;"><em>FlashBack</em></h1>
                 <h2 style="font-family:'Book Antiqua', Palatino, serif;">The Fortuitous Press</h2>
-                <h3>v 2.0.9 dev PWA Test</h3>
+                <h3>v 2.0.10 dev PWA Test</h3>
                 <br>
                 <table>
                     <tr><td width='150'>Programming</td><td>Jeremy Bagai</td></tr>
@@ -1838,7 +1838,7 @@
               }
 
               // The click event on the pop up notification
-              document.getElementById('reloadJB').addEventListener('click', function(){
+              document.getElementById('snackbar').addEventListener('click', function(){
                 newWorker.postMessage({ action: 'skipWaiting' });
               });
 
