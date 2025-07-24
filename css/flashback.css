@@ -1,6 +1,6 @@
 
 body {
-	overscroll-behavior: none;
+	 overscroll-behavior-y: contain;
 }
 
 .centeredtext {
