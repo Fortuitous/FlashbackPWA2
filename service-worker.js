@@ -1,4 +1,4 @@
-var cacheName = 'v12';
+var cacheName = 'v13';
 
 const PRECACHE_URLS = [
         './index.html',
