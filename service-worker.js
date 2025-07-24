@@ -1,5 +1,5 @@
 const CACHE_NAME = 'my-pwa-cache-v2'; // Increment this for a new version
-
+// A comment
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)

@@ -21,8 +21,56 @@
         <link rel="stylesheet" href="css/jquery.mobile.iscrollview.css" media="screen" type="text/css" />
         <link rel="stylesheet" href="css/flashback.css" type="text/css" />
 
-        <script>
-            if ('serviceWorker' in navigator) {
+         <style>
+            #snackbar {
+              visibility: hidden;
+              min-width: 250px;
+              margin-left: -125px;
+              background-color: #333;
+              color: #fff;
+              text-align: center;
+              border-radius: 2px;
+              padding: 16px;
+              position: fixed;
+              z-index: 1;
+              left: 30%;
+              bottom: 100px;
+            }
+
+            #snackbar.show {
+              visibility: visible;
+              -webkit-animation: fadein 0.5s;
+              animation: fadein 0.5s;
+            }
+
+            @-webkit-keyframes fadein {
+              from {
+                bottom: 0;
+                opacity: 0;
+              }
+              to {
+                bottom: 30px;
+                opacity: 1;
+              }
+            }
+
+            @keyframes fadein {
+              from {
+                bottom: 0;
+                opacity: 0;
+              }
+              to {
+                bottom: 30px;
+                opacity: 1;
+              }
+            }
+          </style>
+
+
+
+ 
+<!--         <script>
+                        if ('serviceWorker' in navigator) {
                 window.addEventListener("load", () => {
                     navigator.serviceWorker.register('service-worker.js').then(function(registration) {
                         console.log('ServiceWorker registered');
@@ -31,7 +79,9 @@
                 });
                 })
             }
-        </script>          
+
+
+        </script> -->
 
 	
         <script type="text/javascript" src="js/JQ/jquery-2.1.4.min.js"></script> 
@@ -86,7 +136,8 @@
     	<script type="text/javascript" src="js/greensock/AttrPlugin.min.js"></script>
    	</head>
     <body>
-    
+
+                    <div id="snackbar">A new version of this app is available. Click <a id="reloadJB">here</a> to update.</div>        
 
 <!-- External Toolbars -->
 <!-- <div id='favButton' class='ui-btn ui-icon-plus ui-btn-icon-notext ui-corner-all'> -->
@@ -179,7 +230,9 @@
                     </div>
                 </fieldset>
     <!--             <form id="selectDeckForm" data-intro="<em>Welcome! &nbsp First, select one or more decks.</em>" data-position="top">    -->
-                <form id="selectDeckForm">   
+                <form id="selectDeckForm">  
+
+
 
 
                     <div data-role="popup" id="NoneSelectedPopup" data-overlay-theme="b" data-theme="a" data-dismissible="false" style="max-width:400px;">
@@ -1774,4 +1827,54 @@
         <script type="text/javascript" src="js/bgLog/bglogCore-1604B-FB-svg.min.js"></script>
 
 	</body>
+
+       <script>
+
+            let newWorker;
+
+            function showUpdateBar() {
+                let snackbar = document.getElementById('snackbar');
+                snackbar.className = 'show';
+              }
+
+              // The click event on the pop up notification
+              document.getElementById('reloadJB').addEventListener('click', function(){
+                newWorker.postMessage({ action: 'skipWaiting' });
+              });
+
+              if ('serviceWorker' in navigator) {
+
+                navigator.serviceWorker.register('/service-worker.js').then(reg => {
+                  reg.addEventListener('updatefound', () => {
+                    // A wild service worker has appeared in reg.installing!
+                    newWorker = reg.installing;
+
+                    newWorker.addEventListener('statechange', () => {
+                      // Has network.state changed?
+                      switch (newWorker.state) {
+                        case 'installed':
+                          if (navigator.serviceWorker.controller) {
+                            // new update available
+                            showUpdateBar();
+                          }
+                          // No update available
+                          break;
+                      }
+                    });
+                  });
+                });
+
+                let refreshing;
+                navigator.serviceWorker.addEventListener('controllerchange', function () {
+                  if (refreshing) return;
+                  window.location.reload();
+                  refreshing = true;
+                });
+              }
+
+
+
+
+        </script>          
+
 </html>
