@@ -1,4 +1,4 @@
-const CACHENAME = 'v17';
+const CACHENAME = 'v2.0.0';
 
 const PRECACHE_URLS = [
         './index.html',
