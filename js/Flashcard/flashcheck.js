@@ -1210,7 +1210,11 @@ function onDeviceReady() {
         var opens_in_order = ['21$', '21S', '31P', '41$', '41S', '51$', '51S', '61P', '32D', '32S', '32Z', '42P', '52D', '52S', '62$', '62R', '62S', '43D', '43S', '43U', '43Z', '53P', '63R', '63S', '54D', '54S', '64P', '64R', '64S', '65R']
 
         var openingNumber = Math.ceil(((chosencard.CardID - 2749) % 630) / 21)
-        var openingPlay = opens_in_order[openingNumber - 1]
+        
+        if (openingNumber == 0) {var openingPlay = '65R'}   // For edge case where openingNumber = 0 and returns Undefined
+            else {var openingPlay = opens_in_order[openingNumber - 1]}
+
+/*        var openingPlay = opens_in_order[openingNumber - 1]*/
         var openingPlayText = " after " + openingPlay + ".<br>"
         return openingPlayText
     }
